@@ -3,49 +3,134 @@ import 'package:blinderville/views/dashboard/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Dashboard extends ConsumerWidget {
-  Dashboard({super.key});
-  int pageIndex = 0;
-  Map pages = {
-    'home': Icons.home_rounded,
-    'profile': Icons.person_2_rounded,
-    'forums': Icons.group_rounded,
-    'events': Icons.event_rounded,
-    'notifications': Icons.notifications_rounded
-  };
+class Dashboard extends ConsumerStatefulWidget {
+  const Dashboard({super.key});
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends ConsumerState<Dashboard> {
+  int pageIndex = 0;
+
+  List pages = [
+    ['home', Icons.home_rounded],
+    ['profile', Icons.person_2_rounded],
+    ['forums', Icons.group_rounded],
+    ['events', Icons.event_rounded],
+    ['notifications', Icons.notifications_rounded]
+  ];
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 80,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: 80,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text('blinderville'),
+                  ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    children: pages
+                        .asMap()
+                        .entries
+                        .map<Widget>((e) => Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                              child: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    pageIndex = e.key;
+                                  });
+                                },
+                                icon: Icon(e.value[1]),
+                                iconSize: 40,
+                                padding:
+                                    const EdgeInsets.fromLTRB(50, 0, 50, 0),
+                              ),
+                            ))
+                        .toList(),
+                  )
+                ],
+              ),
+            ),
+            // Pages
+
+            Row(
               children: [
-                const Text('blinderville'),
-                ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: pages.entries
-                      .map((e) => Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(e.value),
-                              iconSize: 40,
-                              padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-                            ),
-                          ))
-                      .toList(),
+                Flexible(
+                  flex: 1,
+                  child: ListView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      children: [
+                        SizedBox(
+                            height: 250,
+                            width: 200,
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  const Text('Johnson Roy'),
+                                  ElevatedButton(
+                                      onPressed: () {},
+                                      child: const Text('Update ok'))
+                                ],
+                              ),
+                            )),
+                        SizedBox(
+                            height: 250,
+                            width: 200,
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  const Text('My follows, likes, matches'),
+                                  ElevatedButton(
+                                      onPressed: () {},
+                                      child: const Text('Update ok'))
+                                ],
+                              ),
+                            )),
+                        SizedBox(
+                            height: 250,
+                            width: 200,
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  const Text('My purchases'),
+                                  ElevatedButton(
+                                      onPressed: () {},
+                                      child: const Text('Update ok'))
+                                ],
+                              ),
+                            )),
+                        SizedBox(
+                            height: 250,
+                            width: 200,
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  const Text('Highlights'),
+                                  ElevatedButton(
+                                      onPressed: () {},
+                                      child: const Text('Update ok'))
+                                ],
+                              ),
+                            ))
+                      ]),
+                ),
+                Flexible(
+                  flex: 3,
+                  child: [const Home(), Profile()][pageIndex],
                 )
               ],
             ),
-          ),
-          // Pages
-          [const Home(), Profile()][pageIndex],
-        ],
+          ],
+        ),
       ),
     );
   }
