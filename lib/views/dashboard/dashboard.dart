@@ -50,11 +50,12 @@ class _DashboardState extends ConsumerState<Dashboard> {
         // Pages
             
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Flexible(
                       
-                      flex: 1,
-                      child: ListView(physics: NeverScrollableScrollPhysics(),shrinkWrap: true, children: [
+                      
+                      child: Column(children: [
                         SizedBox(
                             height: 250,
                             width: 200,
@@ -106,8 +107,51 @@ class _DashboardState extends ConsumerState<Dashboard> {
                       ]),
                     ),
                     Flexible(child: [Home(), Profile()][pageIndex],
-                flex: 3,)
                     
+                flex: 3,),
+                    Flexible(
+                      
+                      
+                      child: Column(children: [
+                        SizedBox(
+                            height: 500,
+                            width: 200,
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  Text('Upcoming events'),
+                                  ElevatedButton(
+                                      onPressed: () {}, child: Text('Update ok'))
+                                ],
+                              ),
+                            )),
+                        SizedBox(
+                            height: 250,
+                            width: 200,
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  Text('Recent forum posts'),
+                                  ElevatedButton(
+                                      onPressed: () {}, child: Text('Update ok'))
+                                ],
+                              ),
+                            )),
+                        SizedBox(
+                            height: 250,
+                            width: 200,
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  Text('My Purchases'),
+                                  ElevatedButton(
+                                      onPressed: () {}, child: Text('Update ok'))
+                                ],
+                              ),
+                            )),
+                        
+                      ]),
+                    ),
                   ],
                 ),
               
