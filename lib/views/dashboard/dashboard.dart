@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
-  Dashboard({super.key});
+  const Dashboard({super.key});
 
   @override
   ConsumerState<Dashboard> createState() => _DashboardState();
@@ -13,8 +13,8 @@ class Dashboard extends ConsumerStatefulWidget {
 class _DashboardState extends ConsumerState<Dashboard> {
   int pageIndex = 0;
 
-  List pages = [[
-    'home', Icons.home_rounded],
+  List pages = [
+    ['home', Icons.home_rounded],
     ['profile', Icons.person_2_rounded],
     ['forums', Icons.group_rounded],
     ['events', Icons.event_rounded],
@@ -62,9 +62,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             child: Card(
                               child: Column(
                                 children: [
-                                  Text('Johnson Roy'),
+                                  const Text('Johnson Roy'),
                                   ElevatedButton(
-                                      onPressed: () {}, child: Text('Update ok'))
+                                      onPressed: () {},
+                                      child: const Text('Update ok'))
                                 ],
                               ),
                             )),
@@ -74,9 +75,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             child: Card(
                               child: Column(
                                 children: [
-                                  Text('My follows, likes, matches'),
+                                  const Text('My follows, likes, matches'),
                                   ElevatedButton(
-                                      onPressed: () {}, child: Text('Update ok'))
+                                      onPressed: () {},
+                                      child: const Text('Update ok'))
                                 ],
                               ),
                             )),
@@ -86,9 +88,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             child: Card(
                               child: Column(
                                 children: [
-                                  Text('My purchases'),
+                                  const Text('My purchases'),
                                   ElevatedButton(
-                                      onPressed: () {}, child: Text('Update ok'))
+                                      onPressed: () {},
+                                      child: const Text('Update ok'))
                                 ],
                               ),
                             )),
@@ -98,9 +101,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             child: Card(
                               child: Column(
                                 children: [
-                                  Text('Highlights'),
+                                  const Text('Highlights'),
                                   ElevatedButton(
-                                      onPressed: () {}, child: Text('Update ok'))
+                                      onPressed: () {},
+                                      child: const Text('Update ok'))
                                 ],
                               ),
                             ))
@@ -162,4 +166,3 @@ class _DashboardState extends ConsumerState<Dashboard> {
     );
   }
 }
-
