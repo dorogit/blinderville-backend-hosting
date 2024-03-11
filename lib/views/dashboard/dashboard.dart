@@ -1,3 +1,4 @@
+import 'package:blinderville/views/dashboard/forums.dart';
 import 'package:blinderville/views/dashboard/home.dart';
 import 'package:blinderville/views/dashboard/profile.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +111,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             ))
                       ]),
                     ),
-                    Flexible(child: [Home(), Profile()][pageIndex],
+                    Flexible(child: [Home(), Profile(), Forums()][pageIndex],
                     
                 flex: 3,),
                     Flexible(
