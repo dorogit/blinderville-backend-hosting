@@ -6,33 +6,83 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Question of the day'),
-              subtitle: Text('When is your birthday?'),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+        child: Container(
+      child: const Column(
+        children: <Widget>[
+          Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                TextButton(
-                  child: const Text('BUY TICKETS'),
-                  onPressed: () {/* ... */},
+                ListTile(
+                  leading: Icon(Icons.question_answer),
+                  title: Text(
+                    'Question of the day',
+                    textScaler: TextScaler.linear(1.5),
+                  ),
+                  subtitle: Text('When is your birthday?'),
                 ),
-                const SizedBox(width: 8),
-                TextButton(
-                  child: const Text('LISTEN'),
-                  onPressed: () {/* ... */},
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: SizedBox(
+                        width: 600,
+                        height: 50,
+                        child: TextField(
+                          decoration: InputDecoration(
+                              suffixIcon: Icon(Icons.send),
+                              labelText: 'Type something...',
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)))),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                const SizedBox(width: 8),
               ],
             ),
-          ],
-        ),
+          ),
+          Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.question_answer),
+                  title: Text(
+                    'Question of the day',
+                    textScaler: TextScaler.linear(1.5),
+                  ),
+                  subtitle: Text('When is your birthday?'),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: SizedBox(
+                        width: 600,
+                        height: 50,
+                        child: TextField(
+                          decoration: InputDecoration(
+                              suffixIcon: Icon(Icons.send),
+                              labelText: 'Type something...',
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)))),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
-    );
+    ));
   }
 }
