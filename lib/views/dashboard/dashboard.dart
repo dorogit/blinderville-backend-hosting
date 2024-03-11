@@ -18,26 +18,33 @@ class Dashboard extends ConsumerWidget {
     return Scaffold(
       body: Column(
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 80,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text('blinderville'),
+                const Text('blinderville'),
                 ListView(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  children: pages.entries.map((e) => Padding(
-                  padding: const EdgeInsets.fromLTRB(10,5,10,0),
-                  child: IconButton(onPressed: () {}, icon: Icon(e.value),iconSize: 40,padding: EdgeInsets.fromLTRB(50, 0, 50,0),),
-                )).toList(),
-                                )
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  children: pages.entries
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(e.value),
+                              iconSize: 40,
+                              padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+                            ),
+                          ))
+                      .toList(),
+                )
               ],
             ),
           ),
           // Pages
-          [Home(),Profile()][pageIndex],
+          [const Home(), Profile()][pageIndex],
         ],
       ),
     );
