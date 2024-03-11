@@ -52,10 +52,9 @@ class Home extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.question_answer),
                   title: Text(
-                    'Question of the day',
+                    "Johnson's wall",
                     textScaler: TextScaler.linear(1.5),
                   ),
-                  subtitle: Text('When is your birthday?'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
