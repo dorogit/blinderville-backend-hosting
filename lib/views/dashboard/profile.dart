@@ -1,10 +1,6 @@
 import "package:flutter/material.dart";
 
-class Profile extends StatelessWidget {
-  const Profile({super.key});
-
-  @override
-  Widget build(BuildContext context) {
+Widget Profile(){
     return Center(
       child: Card(
         child: Column(
@@ -35,4 +31,4 @@ class Profile extends StatelessWidget {
       ),
     );
   }
-}
+
