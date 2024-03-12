@@ -1,7 +1,7 @@
-import 'package:blinderville/views/dashboard/events.dart';
 import 'package:blinderville/views/dashboard/forums.dart';
 import 'package:blinderville/views/dashboard/home.dart';
 import 'package:blinderville/views/dashboard/profile.dart';
+import 'package:blinderville/views/dashboard/thread.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -101,7 +101,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           child: Column(
                             children: [
                               const Text('Johnson Roy'),
-                              ElevatedButton(
+                              FilledButton(
                                   onPressed: () {},
                                   child: const Text('Update ok'))
                             ],
@@ -114,7 +114,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           child: Column(
                             children: [
                               const Text('My follows, likes, matches'),
-                              ElevatedButton(
+                              FilledButton(
                                   onPressed: () {},
                                   child: const Text('Update ok'))
                             ],
@@ -127,7 +127,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           child: Column(
                             children: [
                               const Text('My purchases'),
-                              ElevatedButton(
+                              FilledButton(
                                   onPressed: () {},
                                   child: const Text('Update ok'))
                             ],
@@ -140,7 +140,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           child: Column(
                             children: [
                               const Text('Highlights'),
-                              ElevatedButton(
+                              FilledButton(
                                   onPressed: () {},
                                   child: const Text('Update ok'))
                             ],
@@ -154,7 +154,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     Home(context),
                     Profile(),
                     Forums(),
-                    Events()
+                    Thread()
                   ][pageIndex],
                 ),
                 Flexible(
@@ -166,7 +166,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           child: Column(
                             children: [
                               Text('Upcoming events'),
-                              ElevatedButton(
+                              FilledButton(
                                   onPressed: () {}, child: Text('Update ok'))
                             ],
                           ),
@@ -178,7 +178,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           child: Column(
                             children: [
                               Text('Recent forum posts'),
-                              ElevatedButton(
+                              FilledButton(
                                   onPressed: () {}, child: Text('Update ok'))
                             ],
                           ),
@@ -190,7 +190,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           child: Column(
                             children: [
                               Text('My Purchases'),
-                              ElevatedButton(
+                              FilledButton(
                                   onPressed: () {}, child: Text('Update ok'))
                             ],
                           ),
