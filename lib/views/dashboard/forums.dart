@@ -1,11 +1,15 @@
+import 'package:blinderville/api/forums/forum_api.dart';
+import 'package:blinderville/controller/forum/forum.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Forums extends ConsumerWidget {
+class Forums extends HookConsumerWidget {
   const Forums({super.key});
-
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final forum = ref.watch(forumProvider);
+    print(forum);
     return Column(
       children: [
         Card(
@@ -23,12 +27,15 @@ class Forums extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ForumRow('Forums', 'Latest Posts', 'Posts', 'Threads'),
+                    forum.isLoading?CircularProgressIndicator():
                     ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: (idx, context) =>
-                      ForumRow('Meetups & Events', 'Some', '6', '3'))
+                  itemCount: forum.value!.length,
+                  itemBuilder: (context,idx) {
+                    Map data = forum.value![idx];
+                    print('a:$data["title"]');
+                     return ForumRow(data['title'], 'Some', '6', '3');})
                   ],
                 ),
               ),

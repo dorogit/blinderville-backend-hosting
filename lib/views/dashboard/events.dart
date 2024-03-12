@@ -41,22 +41,33 @@ class Meeting {
   Color background;
   bool isAllDay;
 }
-Widget Events(){
-    return SfCalendar(
-    view: CalendarView.month,
-    dataSource: MeetingDataSource([
-      Meeting(
-          'Conference',
-          DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day, 9, 0, 0),
-          DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day, 9, 0, 0),
-          const Color(0xFF0F8644),
-          false)
-    ]),
-    monthViewSettings: MonthViewSettings(
-        appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
-  );
+Widget Events(context){
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: SfCalendar(
+      view: CalendarView.month,
+      dataSource: MeetingDataSource([
+        Meeting(
+            'Fluttering Mumbai',
+            DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day, 9, 0, 0),
+            DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day+10, 9, 0, 0),
+            const Color(0xFF0F8644),
+            false),
+        Meeting(
+            'Oberoi Hotel Meetup',
+            DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day+2, 9, 0, 0),
+            DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day+3, 9, 0, 0),
+            const Color(0xFF0F8644),
+            false)
+      ]),
+      monthViewSettings: MonthViewSettings(
+          appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
+        ),
+    );
 }
 
 List<Meeting> getDataSource() {

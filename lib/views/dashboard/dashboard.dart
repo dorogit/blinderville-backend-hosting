@@ -154,7 +154,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     Home(context),
                     Profile(),
                     Forums(),
-                    Events()
+                    Events(context)
                   ][pageIndex],
                 ),
                 Flexible(
