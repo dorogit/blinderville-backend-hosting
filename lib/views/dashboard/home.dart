@@ -1,13 +1,10 @@
 import "package:flutter/material.dart";
 import "package:flutter_hooks/flutter_hooks.dart";
+import "package:hooks_riverpod/hooks_riverpod.dart";
 
-class Home extends HookWidget {
-  const Home({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final commentsCount = useState(7);
-    final threadCommentsCount = useState(3);
+Widget Home(context){
+    // final commentsCount = useState(7);
+    // final threadCommentsCount = useState(3);
     final screenSize = MediaQuery.of(context).size;
     final List<String> questions = <String>[
       'DESCRIBE YOURSELF MORE FULLY',
@@ -20,9 +17,7 @@ class Home extends HookWidget {
       "I want to rule the universe"
     ];
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+    return Column(
           children: <Widget>[
             const Card(
               child: Column(
@@ -73,102 +68,103 @@ class Home extends HookWidget {
                     indent: 15,
                     endIndent: 15,
                   ),
-                  SizedBox(
-                    height: 300,
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemCount: commentsCount.value,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
-                          child: Container(
-                            child: Column(
-                              children: <Widget>[
-                                Card(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      const ListTile(
-                                        title: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Icon(Icons.person),
-                                                Text("Johnson Roy"),
-                                              ],
-                                            ),
-                                            Icon(Icons.more_horiz),
-                                          ],
-                                        ),
-                                        subtitle:
-                                            Text("California, 1 year ago"),
-                                      ),
-                                      const Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(20, 0, 0, 20),
-                                        child: Text(
-                                          "Hi, I went to a fancy restaurant today!",
-                                          textScaler: TextScaler.linear(1.5),
-                                        ),
-                                      ),
-                                      const Divider(
-                                        indent: 15,
-                                        endIndent: 15,
-                                      ),
-                                      ListView.builder(
-                                          shrinkWrap: true,
-                                          padding: const EdgeInsets.all(10),
-                                          itemCount: threadCommentsCount.value,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return const Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    9, 10, 8, 0),
-                                                child: Card(
-                                                    child: SizedBox(
-                                                        height: 40,
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  10),
-                                                          child: Align(
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            child: Text(
-                                                                "Testing comments!!!"),
-                                                          ),
-                                                        ))));
-                                          }),
-                                      const Padding(
-                                          padding: EdgeInsets.all(20),
-                                          child: SizedBox(
-                                            height: 40,
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                  suffixIcon: Icon(Icons.send),
-                                                  labelText:
-                                                      'Type something...',
-                                                  filled: true,
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10)))),
-                                            ),
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  )
+                  
+                  // SizedBox(
+                  //   height: 300,
+                  //   child: ListView.builder(
+                  //     padding: const EdgeInsets.all(8),
+                  //     itemCount: commentsCount.value,
+                  //     itemBuilder: (BuildContext context, int index) {
+                  //       return Padding(
+                  //         padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
+                  //         child: Container(
+                  //           child: Column(
+                  //             children: <Widget>[
+                  //               Card(
+                  //                 child: Column(
+                  //                   crossAxisAlignment:
+                  //                       CrossAxisAlignment.start,
+                  //                   children: <Widget>[
+                  //                     const ListTile(
+                  //                       title: Row(
+                  //                         mainAxisAlignment:
+                  //                             MainAxisAlignment.spaceBetween,
+                  //                         children: [
+                  //                           Row(
+                  //                             children: [
+                  //                               Icon(Icons.person),
+                  //                               Text("Johnson Roy"),
+                  //                             ],
+                  //                           ),
+                  //                           Icon(Icons.more_horiz),
+                  //                         ],
+                  //                       ),
+                  //                       subtitle:
+                  //                           Text("California, 1 year ago"),
+                  //                     ),
+                  //                     const Padding(
+                  //                       padding:
+                  //                           EdgeInsets.fromLTRB(20, 0, 0, 20),
+                  //                       child: Text(
+                  //                         "Hi, I went to a fancy restaurant today!",
+                  //                         textScaler: TextScaler.linear(1.5),
+                  //                       ),
+                  //                     ),
+                  //                     const Divider(
+                  //                       indent: 15,
+                  //                       endIndent: 15,
+                  //                     ),
+                  //                     ListView.builder(
+                  //                         shrinkWrap: true,
+                  //                         padding: const EdgeInsets.all(10),
+                  //                         itemCount: threadCommentsCount.value,
+                  //                         itemBuilder: (BuildContext context,
+                  //                             int index) {
+                  //                           return const Padding(
+                  //                               padding: EdgeInsets.fromLTRB(
+                  //                                   9, 10, 8, 0),
+                  //                               child: Card(
+                  //                                   child: SizedBox(
+                  //                                       height: 40,
+                  //                                       child: Padding(
+                  //                                         padding:
+                  //                                             EdgeInsets.all(
+                  //                                                 10),
+                  //                                         child: Align(
+                  //                                           alignment: Alignment
+                  //                                               .centerLeft,
+                  //                                           child: Text(
+                  //                                               "Testing comments!!!"),
+                  //                                         ),
+                  //                                       ))));
+                  //                         }),
+                  //                     const Padding(
+                  //                         padding: EdgeInsets.all(20),
+                  //                         child: SizedBox(
+                  //                           height: 40,
+                  //                           child: TextField(
+                  //                             decoration: InputDecoration(
+                  //                                 suffixIcon: Icon(Icons.send),
+                  //                                 labelText:
+                  //                                     'Type something...',
+                  //                                 filled: true,
+                  //                                 border: OutlineInputBorder(
+                  //                                     borderRadius:
+                  //                                         BorderRadius.all(
+                  //                                             Radius.circular(
+                  //                                                 10)))),
+                  //                           ),
+                  //                         ))
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // )
                 ],
               ),
             ),
@@ -359,8 +355,6 @@ class Home extends HookWidget {
                   )),
             )
           ],
-        ),
-      ),
+      
     );
   }
-}
