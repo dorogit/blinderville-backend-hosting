@@ -1,29 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-
-Widget Events(){
-    return SfCalendar(
-    view: CalendarView.month,
-    dataSource:MeetingDataSource(_getDataSource()) ,
-    monthViewSettings: MonthViewSettings(
-        appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
-  );
-}
-
-List<Meeting> _getDataSource() {
-  final List<Meeting> meetings = <Meeting>[];
-  final DateTime today = DateTime.now();
-  final DateTime startTime =
-      DateTime(today.year, today.month, today.day, 9, 0, 0);
-  final DateTime endTime = startTime.add(const Duration(hours: 2));
-  meetings.add(Meeting(
-      'Conference', startTime, endTime, const Color(0xFF0F8644), false));
-  print(MeetingDataSource(meetings));
-  return meetings;
-}
-
-
 class MeetingDataSource extends CalendarDataSource {
   MeetingDataSource(List<Meeting> source) {
     appointments = source;
@@ -64,4 +41,36 @@ class Meeting {
   Color background;
   bool isAllDay;
 }
+Widget Events(){
+    return SfCalendar(
+    view: CalendarView.month,
+    dataSource: MeetingDataSource([
+      Meeting(
+          'Conference',
+          DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 9, 0, 0),
+          DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 9, 0, 0),
+          const Color(0xFF0F8644),
+          false)
+    ]),
+    monthViewSettings: MonthViewSettings(
+        appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
+  );
+}
+
+List<Meeting> getDataSource() {
+  final List<Meeting> meetings = <Meeting>[];
+  final DateTime today = DateTime.now();
+  final DateTime startTime =
+      DateTime(today.year, today.month+1, today.day, 9, 0, 0);
+  final DateTime endTime = startTime.add(const Duration(hours: 2));
+  meetings.add(Meeting(
+      'Conference', startTime, endTime, const Color(0xFF0F8644), false));
+  print(MeetingDataSource(meetings));
+  return meetings;
+}
+
+
+
   
