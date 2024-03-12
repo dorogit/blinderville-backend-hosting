@@ -22,9 +22,6 @@ class _DashboardState extends ConsumerState<Dashboard> {
     ['events', Icons.event_rounded],
   ];
 
-  final OverlayPortalController _notificationController =
-      OverlayPortalController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +34,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text('blinderville'),
+                  Text(
+                    'Blinderville',
+                    textScaler: TextScaler.linear(2),
+                  ),
                   ListView(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
@@ -59,30 +59,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             ))
                         .toList(),
                   ),
-                  OverlayPortal(
-                      controller: _notificationController,
-                      overlayChildBuilder: (BuildContext context) {
-                        return const Positioned(
-                          top: 50,
-                          right: 250,
-                          child: ColoredBox(
-                            color: Colors.amberAccent,
-                            child: Padding(
-                                padding: EdgeInsets.all(20),
-                                child: SizedBox(
-                                  height: 250,
-                                  width: 100,
-                                  child: Card(
-                                    child: Text("TEST"),
-                                  ),
-                                )),
-                          ),
-                        );
-                      },
-                      child: IconButton(
-                        icon: Icon(Icons.notifications_active),
-                        onPressed: _notificationController.toggle,
-                      ))
+                  IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
                 ],
               ),
             ),
