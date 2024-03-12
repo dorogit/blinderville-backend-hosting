@@ -20,8 +20,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
     ['profile', Icons.person_2_rounded],
     ['forums', Icons.group_rounded],
     ['events', Icons.event_rounded],
-    ['notifications', Icons.notifications_rounded]
   ];
+
+  final OverlayPortalController _notificationController =
+      OverlayPortalController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: double.infinity,
               height: 80,
               child: Row(
@@ -56,7 +58,31 @@ class _DashboardState extends ConsumerState<Dashboard> {
                               ),
                             ))
                         .toList(),
-                  )
+                  ),
+                  OverlayPortal(
+                      controller: _notificationController,
+                      overlayChildBuilder: (BuildContext context) {
+                        return const Positioned(
+                          top: 50,
+                          right: 250,
+                          child: ColoredBox(
+                            color: Colors.amberAccent,
+                            child: Padding(
+                                padding: EdgeInsets.all(20),
+                                child: SizedBox(
+                                  height: 250,
+                                  width: 100,
+                                  child: Card(
+                                    child: Text("TEST"),
+                                  ),
+                                )),
+                          ),
+                        );
+                      },
+                      child: IconButton(
+                        icon: Icon(Icons.notifications_active),
+                        onPressed: _notificationController.toggle,
+                      ))
                 ],
               ),
             ),
@@ -123,8 +149,13 @@ class _DashboardState extends ConsumerState<Dashboard> {
                   ]),
                 ),
                 Flexible(
-                  child: [Home(context), Profile(), Forums(), Events()][pageIndex],
                   flex: 3,
+                  child: [
+                    Home(context),
+                    Profile(),
+                    Forums(),
+                    Events()
+                  ][pageIndex],
                 ),
                 Flexible(
                   child: Column(children: [
