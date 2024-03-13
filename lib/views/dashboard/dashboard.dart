@@ -1,7 +1,8 @@
 import 'package:blinderville/views/dashboard/forums.dart';
 import 'package:blinderville/views/dashboard/home.dart';
 import 'package:blinderville/views/dashboard/profile.dart';
-import 'package:blinderville/views/dashboard/thread.dart';
+import 'package:blinderville/views/thread.dart';
+import 'package:blinderville/views/dashboard/events.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -131,8 +132,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     Home(context),
                     Profile(),
                     Forums(),
-                    Thread(),
-                    Event(context)
+                    Events(context),
                   ][pageIndex],
                 ),
                 Flexible(

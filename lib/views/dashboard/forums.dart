@@ -1,6 +1,8 @@
 import 'package:blinderville/api/forums/forum_api.dart';
 import 'package:blinderville/controller/forum/forum.dart';
+import 'package:blinderville/views/thread.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Forums extends HookConsumerWidget {
@@ -62,36 +64,39 @@ class ForumRow extends StatelessWidget {
   String? c4;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-            flex: 3,
-            child: Card(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(c1 ?? ''),
-            ))),
-        Expanded(
-            flex: 2,
-            child: Card(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(c2 ?? ''),
-            ))),
-        Expanded(
-            child: Card(
-                child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(c3 ?? ''),
-        ))),
-        Expanded(
-            child: Card(
-          child: Padding(
+    return InkWell(
+      onTap: (){context.go('/forum/meetups');},
+      child: Row(
+        children: [
+          Expanded(
+              flex: 3,
+              child: Card(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(c1 ?? ''),
+              ))),
+          Expanded(
+              flex: 2,
+              child: Card(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(c2 ?? ''),
+              ))),
+          Expanded(
+              child: Card(
+                  child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(c4 ?? ''),
-          ),
-        ))
-      ],
+            child: Text(c3 ?? ''),
+          ))),
+          Expanded(
+              child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(c4 ?? ''),
+            ),
+          ))
+        ],
+      ),
     );
   }
 }
