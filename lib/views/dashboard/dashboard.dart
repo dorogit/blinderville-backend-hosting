@@ -66,8 +66,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
               ),
             ),
             // Pages
-            Divider(indent: 50, endIndent: 50),
-            SizedBox(height: 15),
+            Divider(indent: 60, endIndent: 60),
+            SizedBox(height: 25),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -77,7 +77,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                   child: Column(children: [
                     SizedBox(
                         height: 300,
-                        width: 200,
+                        width: 225,
                         child: Card(
                           child: Column(
                             children: [
@@ -118,9 +118,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             ],
                           ),
                         )),
+                    SizedBox(height: 25),
                     SizedBox(
                         height: 330,
-                        width: 200,
+                        width: 225,
                         child: Card(
                           child: Column(
                             children: [
@@ -171,32 +172,50 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             ],
                           ),
                         )),
+                    SizedBox(height: 25),
                     SizedBox(
-                        height: 250,
-                        width: 200,
+                        height: 320,
+                        width: 225,
                         child: Card(
-                          child: Column(
-                            children: [
-                              const Text('My purchases'),
-                              FilledButton(
-                                  onPressed: () {},
-                                  child: const Text('Update ok'))
-                            ],
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Column(
+                              children: [
+                                const Text('My purchases'),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: 4,
+                                  itemBuilder: (BuildContext context, index) {
+                                    return ListTile(
+                                      title: Text("Veronica K.",
+                                          textScaler: TextScaler.linear(0.7)),
+                                      subtitle: Text("Unlocked Profile",
+                                          textScaler: TextScaler.linear(0.7)),
+                                      leading: CircleAvatar(
+                                        backgroundImage: AssetImage(
+                                            'assets/images/profilePicture.jpg'),
+                                        maxRadius: 15,
+                                      ),
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
                           ),
                         )),
-                    SizedBox(
-                        height: 250,
-                        width: 200,
-                        child: Card(
-                          child: Column(
-                            children: [
-                              const Text('Highlights'),
-                              FilledButton(
-                                  onPressed: () {},
-                                  child: const Text('Update ok'))
-                            ],
-                          ),
-                        ))
+                    // SizedBox(
+                    //     height: 250,
+                    //     width: 200,
+                    //     child: Card(
+                    //       child: Column(
+                    //         children: [
+                    //           const Text('Highlights'),
+                    //           FilledButton(
+                    //               onPressed: () {},
+                    //               child: const Text('Update ok'))
+                    //         ],
+                    //       ),
+                    //     ))
                   ]),
                 ),
                 Flexible(
@@ -211,39 +230,147 @@ class _DashboardState extends ConsumerState<Dashboard> {
                 Flexible(
                   child: Column(children: [
                     SizedBox(
-                        height: 500,
-                        width: 200,
+                        height: 400,
+                        width: 225,
                         child: Card(
                           child: Column(
                             children: [
-                              Text('Upcoming events'),
-                              FilledButton(
-                                  onPressed: () {}, child: Text('Update ok'))
+                              SizedBox(height: 20),
+                              Text('Upcoming events',
+                                  textScaler: TextScaler.linear(1.2)),
+                              SizedBox(height: 10),
+                              Divider(indent: 10, endIndent: 10),
+                              SizedBox(height: 10),
+                              SizedBox(
+                                height: 270,
+                                child: ListView.builder(
+                                    itemCount: 100,
+                                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                    itemBuilder: (BuildContext context, index) {
+                                      return Column(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Color.fromARGB(
+                                                  255, 28, 27, 30),
+                                              border: Border(
+                                                left: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 109, 29, 249),
+                                                  width: 5,
+                                                ),
+                                                bottom: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 109, 29, 249),
+                                                  width: 3,
+                                                ),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                                padding: EdgeInsets.all(15),
+                                                child: ListTile(
+                                                  title: Text(
+                                                      "Mike fell on a banana"),
+                                                )),
+                                          ),
+                                          SizedBox(height: 20)
+                                        ],
+                                      );
+                                    }),
+                              )
                             ],
                           ),
                         )),
+                    SizedBox(height: 25),
                     SizedBox(
-                        height: 250,
-                        width: 200,
+                        height: 400,
+                        width: 225,
                         child: Card(
                           child: Column(
                             children: [
-                              Text('Recent forum posts'),
-                              FilledButton(
-                                  onPressed: () {}, child: Text('Update ok'))
+                              SizedBox(height: 20),
+                              Text('Recent Posts',
+                                  textScaler: TextScaler.linear(1.2)),
+                              SizedBox(height: 10),
+                              Divider(indent: 10, endIndent: 10),
+                              SizedBox(height: 10),
+                              SizedBox(
+                                height: 300,
+                                child: ListView.builder(
+                                    itemCount: 100,
+                                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                    itemBuilder: (BuildContext context, index) {
+                                      return Column(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Color.fromARGB(
+                                                  255, 28, 27, 30),
+                                              border: Border(
+                                                left: BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 109, 29, 249),
+                                                    width: 5),
+                                                bottom: BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 109, 29, 249),
+                                                    width: 3),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                                padding: EdgeInsets.all(15),
+                                                child: ListTile(
+                                                  title: Text(
+                                                      "Mike fell on a banana"),
+                                                )),
+                                          ),
+                                          SizedBox(height: 20)
+                                        ],
+                                      );
+                                    }),
+                              )
                             ],
                           ),
                         )),
+                    SizedBox(height: 25),
                     SizedBox(
                         height: 250,
-                        width: 200,
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Text('My Purchases'),
-                              FilledButton(
-                                  onPressed: () {}, child: Text('Update ok'))
-                            ],
+                        width: 225,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 109, 29, 249),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  title: Text("BLINDERBLING"),
+                                  trailing: Icon(Icons.more_vert),
+                                ),
+                                Divider(indent: 10, endIndent: 10),
+                                SizedBox(
+                                  height: 150,
+                                  child: ListView(
+                                    children: [
+                                      ListTile(
+                                          title: Text("BB Earned"),
+                                          trailing: Text("\$300")),
+                                      ListTile(
+                                          title: Text("BB Earned"),
+                                          trailing: Text("\$300")),
+                                      ListTile(
+                                          title: Text("BB Earned"),
+                                          trailing: Text("\$300")),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         )),
                   ]),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 const darkColorScheme = ColorScheme(
-  
   brightness: Brightness.dark,
   primary: Color.fromARGB(255, 120, 67, 255),
   onPrimary: Color.fromARGB(255, 248, 248, 248),
@@ -23,7 +22,7 @@ const darkColorScheme = ColorScheme(
   onBackground: Color(0xFFE6E1E6),
   surface: Color(0xFF1C1B1E),
   onSurface: Color(0xFFE6E1E6),
-  surfaceVariant: Color(0xFF49454E),
+  surfaceVariant: Color(0xFF1C1B1E),
   onSurfaceVariant: Color(0xFFCAC4CF),
   outline: Color(0xFF948F99),
   onInverseSurface: Color(0xFF1C1B1E),
