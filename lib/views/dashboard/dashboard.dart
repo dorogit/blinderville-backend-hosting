@@ -61,7 +61,18 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             ))
                         .toList(),
                   ),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {}, icon: Icon(Icons.notifications)),
+                      SizedBox(width: 30),
+                      CircleAvatar(
+                        maxRadius: 15,
+                        backgroundImage:
+                            AssetImage('assets/images/profilePicture.jpg'),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
