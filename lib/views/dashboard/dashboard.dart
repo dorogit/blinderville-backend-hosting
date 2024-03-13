@@ -119,7 +119,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           ),
                         )),
                     SizedBox(
-                        height: 340,
+                        height: 330,
                         width: 200,
                         child: Card(
                           child: Column(
