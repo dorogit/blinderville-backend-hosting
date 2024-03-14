@@ -1,6 +1,6 @@
-import 'package:blinderville/views/dashboard/events.dart';
 import 'package:blinderville/views/dashboard/forums.dart';
 import 'package:blinderville/views/dashboard/home.dart';
+import 'package:blinderville/views/dashboard/post.dart';
 import 'package:blinderville/views/dashboard/profile.dart';
 import 'package:blinderville/views/thread.dart';
 import 'package:flutter/cupertino.dart';
@@ -240,7 +240,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     Home(context),
                     Profile(),
                     Forums(updateParentIndex: updateIndex),
-                    Events(context),
+                    Post(),
+                    //Events(context),
                     Thread()
                   ][pageIndex],
                 ),
