@@ -2,6 +2,7 @@ import 'package:blinderville/views/dashboard/events.dart';
 import 'package:blinderville/views/dashboard/forums.dart';
 import 'package:blinderville/views/dashboard/home.dart';
 import 'package:blinderville/views/dashboard/profile.dart';
+import 'package:blinderville/views/thread.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,6 +24,12 @@ class _DashboardState extends ConsumerState<Dashboard> {
     ['forums', Icons.arrow_outward_rounded],
     ['events', Icons.event_rounded],
   ];
+
+  void updateIndex(int newIndex) {
+    setState(() {
+      pageIndex = newIndex;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +57,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                               padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                               child: IconButton(
                                 onPressed: () {
-                                  setState(() {
-                                    pageIndex = e.key;
-                                  });
+                                  updateIndex(e.key);
                                 },
                                 icon: Icon(e.value[1]),
                                 iconSize: 30,
@@ -234,8 +239,9 @@ class _DashboardState extends ConsumerState<Dashboard> {
                   child: [
                     Home(context),
                     Profile(),
-                    Forums(),
+                    Forums(updateParentIndex: updateIndex),
                     Events(context),
+                    Thread()
                   ][pageIndex],
                 ),
                 Flexible(

@@ -1,13 +1,13 @@
-import 'package:blinderville/api/forums/forum_api.dart';
 import 'package:blinderville/controller/forum/forum.dart';
-import 'package:blinderville/views/thread.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Forums extends HookConsumerWidget {
-  const Forums({super.key});
-  
+  final Function(int) updateParentIndex;
+  const Forums(
+      {super.key,
+      required this.updateParentIndex}); // Accept pageIndex parameter
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final forum = ref.watch(forumProvider);
@@ -23,25 +23,27 @@ class Forums extends HookConsumerWidget {
         Card(
           child: Column(
             children: [
-              
               Card(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ForumRow('Forums', 'Latest Posts', 'Posts', 'Threads'),
-                    forum.isLoading?CircularProgressIndicator():
-                    ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: forum.value!.length,
-                  itemBuilder: (context,idx) {
-                    Map data = forum.value![idx];
-                    print('a:$data["title"]');
-                     return ForumRow(data['title'], 'Some', '6', '3');})
+                    ForumRow('Forums', 'Latest Posts', 'Posts', 'Threads',
+                        updateParentIndex),
+                    forum.isLoading
+                        ? CircularProgressIndicator()
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: forum.value!.length,
+                            itemBuilder: (context, idx) {
+                              Map data = forum.value![idx];
+                              print('a:$data["title"]');
+                              return ForumRow(data['title'], 'Some', '6', '3',
+                                  updateParentIndex);
+                            })
                   ],
                 ),
               ),
-              
             ],
           ),
         ),
@@ -55,17 +57,22 @@ class ForumRow extends StatelessWidget {
     this.c1,
     this.c2,
     this.c3,
-    this.c4, {
+    this.c4,
+    this.updateParentIndex, {
     super.key,
   });
   String? c1;
   String? c2;
   String? c3;
   String? c4;
+  Function(int) updateParentIndex;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){context.go('/forum/meetups');},
+      onTap: () {
+        //context.go('/forum/meetups');
+        updateParentIndex(4);
+      },
       child: Row(
         children: [
           Expanded(
