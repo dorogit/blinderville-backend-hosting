@@ -115,11 +115,9 @@ class Thread extends HookConsumerWidget {
                                             BorderRadius.circular(25)),
                                     color:
                                         const Color.fromARGB(255, 137, 53, 255),
-                                    child: SizedBox(
-                                      height: 65,
-                                      child: ListTile(
-                                        title: Text('Sticky threads'),
-                                      ),
+                                    child: ListTile(
+                                      title:
+                                          Center(child: Text('Sticky threads')),
                                     ),
                                   ),
                                 ),
@@ -131,11 +129,8 @@ class Thread extends HookConsumerWidget {
                                             BorderRadius.circular(25)),
                                     color:
                                         const Color.fromARGB(255, 137, 53, 255),
-                                    child: SizedBox(
-                                      height: 65,
-                                      child: ListTile(
-                                        title: Text("Latest Post"),
-                                      ),
+                                    child: ListTile(
+                                      title: Center(child: Text("Latest Post")),
                                     ),
                                   ),
                                 ),
@@ -146,11 +141,8 @@ class Thread extends HookConsumerWidget {
                                             BorderRadius.circular(25)),
                                     color:
                                         const Color.fromARGB(255, 137, 53, 255),
-                                    child: SizedBox(
-                                      height: 65,
-                                      child: ListTile(
-                                        title: Center(child: Text("Posts")),
-                                      ),
+                                    child: ListTile(
+                                      title: Center(child: Text("Posts")),
                                     ),
                                   ),
                                 ),
@@ -161,11 +153,8 @@ class Thread extends HookConsumerWidget {
                                             BorderRadius.circular(25)),
                                     color:
                                         const Color.fromARGB(255, 137, 53, 255),
-                                    child: SizedBox(
-                                      height: 65,
-                                      child: ListTile(
-                                        title: Center(child: Text("Replies")),
-                                      ),
+                                    child: ListTile(
+                                      title: Center(child: Text("Replies")),
                                     ),
                                   ),
                                 ),
