@@ -1,6 +1,4 @@
 import 'package:blinderville/views/dashboard/dashboard.dart';
-import 'package:blinderville/views/dashboard/home.dart';
-import 'package:blinderville/views/dashboard/test.dart';
 import 'package:blinderville/views/thread.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,5 +13,4 @@ final router = GoRouter(initialLocation: '/dashboard', routes: [
     name: 'tst',
     builder: (context, state) => const Thread(),
   ),
-
 ]);

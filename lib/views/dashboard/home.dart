@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 Widget Home(context) {
   // final commentsCount = useState(7);
   // final threadCommentsCount = useState(3);
+  // ignore: unused_local_variable
   final screenSize = MediaQuery.of(context).size;
   final List<String> questions = <String>[
     'DESCRIBE YOURSELF MORE FULLY',

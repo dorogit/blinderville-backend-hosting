@@ -52,6 +52,7 @@ class Forums extends HookConsumerWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ForumRow extends StatelessWidget {
   ForumRow(
     this.c1,
