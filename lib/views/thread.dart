@@ -18,7 +18,7 @@ class Thread extends HookConsumerWidget {
                 "MEETUPS AND EVENTS",
                 textScaler: TextScaler.linear(1.5),
               ),
-              subtitle: Text("Meet other people"),
+              subtitle: Text("Get out and meet each other!"),
             ),
           ),
         ),
@@ -74,15 +74,17 @@ class Thread extends HookConsumerWidget {
                     Flexible(
                       child: SearchBar(
                         hintText: "Search for a thread!",
-                        leading: Icon(Icons.search),
                       ),
                     ),
                     SizedBox(width: 25),
                     FilledButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 244, 180, 68))),
                         onPressed: () {},
                         child: Padding(
                           padding: EdgeInsets.all(15),
-                          child: Text("POST"),
+                          child: Text("CREATE THREAD"),
                         ))
                   ],
                 ),

@@ -118,6 +118,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                                 child: TextField(
                                   style: TextStyle(fontSize: 12),
                                   maxLines: 3,
+                                  maxLength: 140,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
