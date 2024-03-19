@@ -21,7 +21,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
   List pages = [
     ['home', Icons.home_rounded],
     ['profile', Icons.person_2_rounded],
-    ['forums', Icons.arrow_outward_rounded],
+    ['forums', Icons.chat_sharp],
     ['events', Icons.event_rounded],
   ];
 
@@ -45,7 +45,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Image(image: AssetImage('assets/images/logo.png')),
+                    child: Image(image: AssetImage('assets/images/logo1.png')),
                   ),
                   ListView(
                     shrinkWrap: true,

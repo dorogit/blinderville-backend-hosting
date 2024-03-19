@@ -15,11 +15,38 @@ class Forums extends HookConsumerWidget {
     return Column(
       children: [
         Card(
-          child: SizedBox(
-              width: double.infinity,
-              height: 100,
-              child: Center(child: Text('Welcome to Blinderville'))),
+            child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            children: [
+              Center(
+                  child: Text(
+                'WELCOME TO THE BLINDERVILLE FORUM',
+                textScaler: TextScaler.linear(1.6),
+                style: TextStyle(color: Color.fromARGB(255, 120, 67, 255)),
+              )),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Mingle, Explore, Discover,Find...'),
+                  Text(
+                    'The One',
+                    textScaler: TextScaler.linear(1.2),
+                    style: TextStyle(color: Color.fromARGB(255, 120, 67, 255)),
+                  )
+                ],
+              ),
+            ],
+          ),
+        )),
+        SizedBox(height: 25),
+        Center(
+          child: Text('Forum rules and Code of Conduct',
+              textScaler: TextScaler.linear(1.2),
+              style: TextStyle(color: Color.fromARGB(255, 120, 67, 255))),
         ),
+        SizedBox(height: 25),
         Card(
           child: Column(
             children: [
@@ -27,11 +54,97 @@ class Forums extends HookConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ForumRow('Forums', 'Latest Posts', 'Posts', 'Threads',
-                        updateParentIndex),
+                    Row(
+                      children: [
+                        SizedBox(width: 10),
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color.fromARGB(255, 28, 27, 30),
+                              border: Border(
+                                left: BorderSide(
+                                    color: Color.fromARGB(255, 109, 29, 249),
+                                    width: 5),
+                                bottom: BorderSide(
+                                    color: Color.fromARGB(255, 109, 29, 249),
+                                    width: 3),
+                              ),
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Center(child: Text("Forums"))),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color.fromARGB(255, 28, 27, 30),
+                              border: Border(
+                                left: BorderSide(
+                                    color: Color.fromARGB(255, 109, 29, 249),
+                                    width: 5),
+                                bottom: BorderSide(
+                                    color: Color.fromARGB(255, 109, 29, 249),
+                                    width: 3),
+                              ),
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Center(child: Text("Latest Post"))),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color.fromARGB(255, 28, 27, 30),
+                              border: Border(
+                                left: BorderSide(
+                                    color: Color.fromARGB(255, 109, 29, 249),
+                                    width: 5),
+                                bottom: BorderSide(
+                                    color: Color.fromARGB(255, 109, 29, 249),
+                                    width: 3),
+                              ),
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Center(child: Text("Threads"))),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color.fromARGB(255, 28, 27, 30),
+                              border: Border(
+                                left: BorderSide(
+                                    color: Color.fromARGB(255, 109, 29, 249),
+                                    width: 5),
+                                bottom: BorderSide(
+                                    color: Color.fromARGB(255, 109, 29, 249),
+                                    width: 3),
+                              ),
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Center(child: Text("Posts"))),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                      ],
+                    ),
                     forum.isLoading
                         ? CircularProgressIndicator()
                         : ListView.builder(
+                            padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: forum.value!.length,
@@ -74,35 +187,76 @@ class ForumRow extends StatelessWidget {
         //context.go('/forum/meetups');
         updateParentIndex(4);
       },
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-              flex: 3,
-              child: Card(
-                  child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(c1 ?? ''),
-              ))),
-          Expanded(
-              flex: 2,
-              child: Card(
-                  child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(c2 ?? ''),
-              ))),
-          Expanded(
-              child: Card(
-                  child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(c3 ?? ''),
-          ))),
-          Expanded(
-              child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(c4 ?? ''),
-            ),
-          ))
+          Row(
+            children: [
+              Expanded(
+                  flex: 3,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromARGB(255, 28, 27, 30),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(15),
+                      child: ListTile(
+                          title: Text(
+                        c1 ?? '',
+                        style:
+                            TextStyle(color: Color.fromARGB(255, 120, 67, 255)),
+                      )),
+                    ),
+                  )),
+              SizedBox(width: 10),
+              Expanded(
+                  flex: 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromARGB(255, 28, 27, 30),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(15),
+                      child: ListTile(
+                          title: Text(
+                        c2 ?? '',
+                      )),
+                    ),
+                  )),
+              SizedBox(width: 10),
+              Expanded(
+                  child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromARGB(255, 28, 27, 30),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: ListTile(
+                      title: Text(
+                    c3 ?? '',
+                  )),
+                ),
+              )),
+              SizedBox(width: 10),
+              Expanded(
+                  child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromARGB(255, 28, 27, 30),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: ListTile(
+                      title: Text(
+                    c4 ?? '',
+                  )),
+                ),
+              )),
+            ],
+          ),
+          SizedBox(height: 15)
         ],
       ),
     );
