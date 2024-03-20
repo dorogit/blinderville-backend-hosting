@@ -29,9 +29,9 @@ class Forums extends HookConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Mingle, Explore, Discover,Find...'),
+                  Text('Mingle, Explore, Discover, Find...'),
                   Text(
-                    'The One',
+                    ' The One',
                     textScaler: TextScaler.linear(1.2),
                     style: TextStyle(color: Color.fromARGB(255, 120, 67, 255)),
                   )
@@ -54,6 +54,7 @@ class Forums extends HookConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    SizedBox(height: 25),
                     Row(
                       children: [
                         SizedBox(width: 10),

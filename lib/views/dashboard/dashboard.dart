@@ -1,3 +1,4 @@
+import 'package:blinderville/views/dashboard/events.dart';
 import 'package:blinderville/views/dashboard/forums.dart';
 import 'package:blinderville/views/dashboard/home.dart';
 import 'package:blinderville/views/dashboard/post.dart';
@@ -241,9 +242,9 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     Home(context),
                     Profile(),
                     Forums(updateParentIndex: updateIndex),
-                    Post(),
-                    //Events(context),
-                    Thread()
+                    Events(context),
+                    Thread(),
+                    Post()
                   ][pageIndex],
                 ),
                 Flexible(
@@ -263,7 +264,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                               SizedBox(
                                 height: 270,
                                 child: ListView.builder(
-                                    itemCount: 100,
+                                    itemCount: 10,
                                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                     itemBuilder: (BuildContext context, index) {
                                       return Column(
@@ -318,7 +319,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                               SizedBox(
                                 height: 300,
                                 child: ListView.builder(
-                                    itemCount: 100,
+                                    itemCount: 10,
                                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                     itemBuilder: (BuildContext context, index) {
                                       return Column(
