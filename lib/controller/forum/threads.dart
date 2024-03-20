@@ -1,12 +1,22 @@
 import 'package:blinderville/api/forums/threads_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'threads.g.dart';
+class CurrentThreadNotifier extends StateNotifier<String> {
+  CurrentThreadNotifier() : super("");
 
-@riverpod
-Future<List> threads(Ref ref) async {
-  final topics = await ThreadsAPI().getThreads();
-  // print('svdv: $topics');
-  return topics;
+  void setCurrentThread(String threadId) {
+    state = threadId;
+  }
 }
+
+final currentThreadProvider =
+    StateNotifierProvider<CurrentThreadNotifier, String>((ref) {
+  return CurrentThreadNotifier();
+});
+
+final threadsProvider = FutureProvider<List>((ref) async {
+  final currentThread = ref.watch(currentThreadProvider);
+  final threadsAPI = ThreadsAPI(); // Assuming you have configured Dio
+  final threads = await threadsAPI.getThreads(currentThread);
+  return threads;
+});

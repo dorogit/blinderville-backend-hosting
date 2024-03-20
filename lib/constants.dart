@@ -1,1 +1,1 @@
-String baseUrl = 'https://blinderville-backend.vercel.app';
+String baseUrl = 'https://blinderville-hosting.onrender.com';

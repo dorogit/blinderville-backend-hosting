@@ -170,7 +170,7 @@ class Thread extends HookConsumerWidget {
                                         (BuildContext context, int index) {
                                       var thread = threads.value![index];
                                       return Container(
-                                        margin: EdgeInsets.all(5),
+                                        margin: EdgeInsets.all(10),
                                         child: Row(
                                           children: [
                                             Flexible(
@@ -182,7 +182,11 @@ class Thread extends HookConsumerWidget {
                                                   height: 65,
                                                   child: ListTile(
                                                     title: Text(
-                                                        thread['name'] ?? ''),
+                                                      thread['name'] ?? '',
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
                                                     subtitle: Text(
                                                         '${thread['posts'].length} Posts'),
                                                   ),
