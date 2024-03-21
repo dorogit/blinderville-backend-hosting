@@ -206,35 +206,35 @@ class ForumRow extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return InkWell(
-      onTap: () {
-        final currentThread = ref.watch(currentThreadProvider);
-        updateParentIndex(4);
-
-        ref.read(currentThreadProvider.notifier).setCurrentThread(threadId);
-        print(
-          "OKAKOSKAOD $currentThread",
-        );
-      },
+    return Container(
       child: Column(
         children: [
           Row(
             children: [
               Expanded(
                 flex: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color.fromARGB(255, 28, 27, 30),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(15),
-                    child: ListTile(
-                      title: Text(
-                        c1 ?? '',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 120, 67, 255),
-                        ),
+                child: SizedBox(
+                  height: 75,
+                  width: double.infinity,
+                  child: FloatingActionButton(
+                    backgroundColor: Color(0xFF1C1B1E),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    onPressed: () {
+                      final currentThread = ref.watch(currentTopicProvider);
+                      updateParentIndex(4);
+
+                      ref
+                          .read(currentTopicProvider.notifier)
+                          .setCurrentTopic(threadId);
+                      print(
+                        "OKAKOSKAOD $currentThread",
+                      );
+                    },
+                    child: Text(
+                      c1 ?? '',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 120, 67, 255),
                       ),
                     ),
                   ),

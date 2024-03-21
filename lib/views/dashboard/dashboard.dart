@@ -221,19 +221,6 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             ),
                           ),
                         )),
-                    // SizedBox(
-                    //     height: 250,
-                    //     width: 200,
-                    //     child: Card(
-                    //       child: Column(
-                    //         children: [
-                    //           const Text('Highlights'),
-                    //           FilledButton(
-                    //               onPressed: () {},
-                    //               child: const Text('Update ok'))
-                    //         ],
-                    //       ),
-                    //     ))
                   ]),
                 ),
                 Flexible(
