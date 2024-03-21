@@ -71,18 +71,57 @@ class Profile extends StatelessWidget {
                       FilterDropdown(
                           label: 'Age',
                           options: ['18-25', '26-35', '36-50', '50+']),
+                      FilterDropdown(label: 'Race', options: [
+                        'Caucasian',
+                        'African American',
+                        'Asian',
+                      ]),
+                      FilterDropdown(label: 'Gender Identity', options: [
+                        'Agender',
+                        'Androgyne',
+                        'Bigender',
+                        'Butch',
+                        'Other'
+                      ]),
                       FilterDropdown(
-                          label: 'Political Views',
-                          options: ['Liberal', 'Conservative', 'Moderate']),
-                      FilterDropdown(
-                          label: 'Gender',
-                          options: ['Male', 'Female', 'Other']),
+                          label: 'Has kids', options: ['Nope', '1', '2+']),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
                       FilterDropdown(
                           label: 'Height',
                           options: ['Short', 'Average', 'Tall']),
                       FilterDropdown(
                           label: 'Weight',
                           options: ['Underweight', 'Normal', 'Overweight']),
+                      FilterDropdown(label: 'Smokes', options: ['Yep', 'Nope']),
+                      FilterDropdown(label: 'Religion', options: [
+                        'Christian',
+                        'Islamic',
+                        'Hindu',
+                        'Buddhist'
+                      ]),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      FilterDropdown(
+                          label: 'Occupation', options: ['Software Engineer']),
+                      FilterDropdown(
+                          label: 'Political Views',
+                          options: ['Left', 'Right', 'Center']),
+                      FilterDropdown(label: 'Education', options: [
+                        'High School',
+                        'Bachelors',
+                        'Anything works'
+                      ]),
                     ],
                   ),
                 ],

@@ -3,29 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Thread extends HookConsumerWidget {
-  const Thread({super.key});
+  final Function(int) updateParentIndex;
+  const Thread({
+    super.key,
+    required this.updateParentIndex,
+  });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentTopic = ref.watch(currentTopicProvider);
     final threads = ref.watch(threadsProvider);
+    //ref.read(currentTopicProvider.notifier).setLoading(false);
+
     return Column(
       children: [
         Card(
           child: Padding(
             padding: EdgeInsets.all(30),
-            child: const ListTile(
+            child: ListTile(
               leading: Icon(Icons.people),
               title: Text(
-                "MEETUPS AND EVENTS",
+                currentTopic.currentTopicName,
                 textScaler: TextScaler.linear(1.5),
               ),
-              subtitle: Text("Get out and meet each other!"),
+              subtitle: Text(currentTopic.currentTopicDesc),
             ),
           ),
         ),
         SizedBox(
           height: 20,
         ),
-        const Card(
+        Card(
           child: Padding(
             padding: EdgeInsets.all(25),
             child: Row(
@@ -53,7 +60,7 @@ class Thread extends HookConsumerWidget {
                   width: 20,
                 ),
                 Text(
-                  "Meetups and Events",
+                  currentTopic.currentTopicName,
                   textScaler: TextScaler.linear(1.3),
                 ),
               ],
@@ -180,15 +187,33 @@ class Thread extends HookConsumerWidget {
                                                     255, 68, 66, 66),
                                                 child: SizedBox(
                                                   height: 65,
-                                                  child: ListTile(
-                                                    title: Text(
-                                                      thread['name'] ?? '',
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                  width: double.infinity,
+                                                  child: FloatingActionButton(
+                                                    backgroundColor:
+                                                        Color.fromARGB(
+                                                            255, 68, 66, 66),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                    onPressed: () {
+                                                      updateParentIndex(5);
+                                                    },
+                                                    child: ListTile(
+                                                      title: Text(
+                                                        thread['name'] ?? '',
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                      subtitle: Text(
+                                                        '${thread['posts'].length} Posts',
+                                                        style: TextStyle(
+                                                            color: Colors.grey),
+                                                      ),
                                                     ),
-                                                    subtitle: Text(
-                                                        '${thread['posts'].length} Posts'),
                                                   ),
                                                 ),
                                               ),

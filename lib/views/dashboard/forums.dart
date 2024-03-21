@@ -170,8 +170,14 @@ class Forums extends HookConsumerWidget {
                             itemCount: forum.value!.length,
                             itemBuilder: (context, idx) {
                               Map data = forum.value![idx];
-                              return ForumRow(data['title'], 'Some', '6', '3',
-                                  data['_id'], updateParentIndex);
+                              return ForumRow(
+                                  data['title'],
+                                  data['description'],
+                                  'Some',
+                                  '6',
+                                  '3',
+                                  data['_id'],
+                                  updateParentIndex);
                             },
                           ),
                   ],
@@ -189,19 +195,21 @@ class Forums extends HookConsumerWidget {
 class ForumRow extends HookConsumerWidget {
   ForumRow(
     this.c1,
+    this.desc,
     this.c2,
     this.c3,
     this.c4,
-    this.threadId,
+    this.topicId,
     this.updateParentIndex, {
     super.key,
   });
 
-  String? c1;
+  String c1;
+  String desc;
   String? c2;
   String? c3;
   String? c4;
-  String threadId;
+  String topicId;
   Function updateParentIndex;
 
   @override
@@ -221,20 +229,23 @@ class ForumRow extends HookConsumerWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
-                      final currentThread = ref.watch(currentTopicProvider);
                       updateParentIndex(4);
 
-                      ref
-                          .read(currentTopicProvider.notifier)
-                          .setCurrentTopic(threadId);
-                      print(
-                        "OKAKOSKAOD $currentThread",
-                      );
+                      ref.read(currentTopicProvider.notifier).setCurrentTopic(
+                          currentTopicId: topicId,
+                          currentTopicName: c1,
+                          currentTopicDesc: desc,
+                          isLoading: true);
                     },
-                    child: Text(
-                      c1 ?? '',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 120, 67, 255),
+                    child: ListTile(
+                      title: Text(
+                        c1,
+                        style:
+                            TextStyle(color: Color.fromARGB(255, 120, 67, 255)),
+                      ),
+                      subtitle: Text(
+                        desc,
+                        style: TextStyle(color: Colors.grey),
                       ),
                     ),
                   ),

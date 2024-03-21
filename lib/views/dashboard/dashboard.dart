@@ -230,7 +230,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     Profile(),
                     Forums(updateParentIndex: updateIndex),
                     Events(context),
-                    Thread(),
+                    Thread(updateParentIndex: updateIndex),
                     Post()
                   ][pageIndex],
                 ),
