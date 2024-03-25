@@ -1,70 +1,28 @@
 import 'package:blinderville/api/forums/threads_api.dart';
+import "package:flutter/foundation.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Topic {
-  const Topic({
-    required this.currentTopicId,
-    required this.currentTopicName,
-    required this.currentTopicDesc,
-    required this.isLoading,
-  });
+class _ThreadsNotifier extends ChangeNotifier {
+  final String topicId;
+  bool isLoading = false;
+  List<Map<String, dynamic>>? threads;
 
-  final String currentTopicId;
-  final String currentTopicName;
-  final String currentTopicDesc;
-  final bool isLoading;
+  _ThreadsNotifier({required this.topicId});
 
-  Topic copyWith({
-    String? currentTopicId,
-    String? currentTopicName,
-    String? currentTopicDesc,
-    bool? isLoading,
-  }) {
-    return Topic(
-      currentTopicId: currentTopicId ?? this.currentTopicId,
-      currentTopicName: currentTopicName ?? this.currentTopicName,
-      currentTopicDesc: currentTopicDesc ?? this.currentTopicDesc,
-      isLoading: isLoading ?? this.isLoading,
-    );
+  Future<void> loadThreads() async {
+    isLoading = true;
+    notifyListeners();
+
+    final response = await ThreadsAPI.getThreads(topicId);
+    if (response != null) {
+      threads = response;
+    }
+    isLoading = false;
+    notifyListeners();
   }
 }
 
-class TopicsNotifier extends StateNotifier<Topic> {
-  TopicsNotifier()
-      : super(Topic(
-          currentTopicId: "",
-          currentTopicName: "",
-          currentTopicDesc: "",
-          isLoading: false,
-        ));
-
-  void setCurrentTopic({
-    required String currentTopicId,
-    required String currentTopicName,
-    required String currentTopicDesc,
-    bool isLoading = false,
-  }) {
-    state = Topic(
-      currentTopicId: currentTopicId,
-      currentTopicName: currentTopicName,
-      currentTopicDesc: currentTopicDesc,
-      isLoading: isLoading,
-    );
-  }
-
-  void setLoading(bool isLoading) {
-    state = state.copyWith(isLoading: isLoading);
-  }
-}
-
-final currentTopicProvider =
-    StateNotifierProvider<TopicsNotifier, Topic>((ref) {
-  return TopicsNotifier();
-});
-
-final threadsProvider = FutureProvider<List>((ref) async {
-  final currentThread = ref.watch(currentTopicProvider);
-  final threadsAPI = ThreadsAPI(); // Assuming you have configured Dio
-  final threads = await threadsAPI.getThreads(currentThread.currentTopicId);
-  return threads;
-});
+/// Provider to handle threads
+final threadsProvider = ChangeNotifierProvider.family<_ThreadsNotifier, String>(
+    (_, topicId) => _ThreadsNotifier(topicId: topicId));

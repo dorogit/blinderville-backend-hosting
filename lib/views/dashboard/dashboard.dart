@@ -1,3 +1,4 @@
+import 'package:blinderville/views/dashboard/createThread.dart';
 import 'package:blinderville/views/dashboard/events.dart';
 import 'package:blinderville/views/dashboard/forums.dart';
 import 'package:blinderville/views/dashboard/home.dart';
@@ -231,7 +232,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     Forums(updateParentIndex: updateIndex),
                     Events(context),
                     Thread(updateParentIndex: updateIndex),
-                    Post()
+                    Post(),
+                    CreateThread()
                   ][pageIndex],
                 ),
                 Flexible(

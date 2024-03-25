@@ -1,5 +1,7 @@
+import 'package:blinderville/controller/forum/forum.dart';
 import 'package:blinderville/controller/forum/threads.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Thread extends HookConsumerWidget {
@@ -11,7 +13,24 @@ class Thread extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentTopic = ref.watch(currentTopicProvider);
-    final threads = ref.watch(threadsProvider);
+    final currentThreadsNotifier = threadsProvider(currentTopic.currentTopicId);
+    final currentThreadsProvider = ref.read(
+      threadsProvider(currentTopic.currentTopicId),
+    );
+    final isLoading = ref.watch(
+      currentThreadsNotifier.select((value) => value.isLoading),
+    );
+    final threads = ref.watch(
+      currentThreadsNotifier.select((value) => value.threads),
+    );
+
+    useEffect(
+      () {
+        currentThreadsProvider.loadThreads();
+        return null;
+      },
+      [],
+    );
     //ref.read(currentTopicProvider.notifier).setLoading(false);
 
     return Column(
@@ -88,7 +107,9 @@ class Thread extends HookConsumerWidget {
                         style: ButtonStyle(
                             backgroundColor: MaterialStatePropertyAll(
                                 Color.fromARGB(255, 244, 180, 68))),
-                        onPressed: () {},
+                        onPressed: () {
+                          updateParentIndex(6);
+                        },
                         child: Padding(
                           padding: EdgeInsets.all(15),
                           child: Text("CREATE THREAD"),
@@ -169,13 +190,13 @@ class Thread extends HookConsumerWidget {
                                 ),
                               ],
                             ),
-                            threads.hasValue
+                            isLoading
                                 ? ListView.builder(
                                     shrinkWrap: true,
-                                    itemCount: threads.value!.length,
+                                    itemCount: threads!.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      var thread = threads.value![index];
+                                      var thread = threads[index];
                                       return Container(
                                         margin: EdgeInsets.all(10),
                                         child: Row(
