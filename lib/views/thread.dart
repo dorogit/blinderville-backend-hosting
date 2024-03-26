@@ -26,7 +26,8 @@ class Thread extends HookConsumerWidget {
 
     useEffect(
       () {
-        currentThreadsProvider.loadThreads();
+        WidgetsBinding.instance
+            .addPostFrameCallback((_) => currentThreadsProvider.loadThreads());
         return null;
       },
       [],
@@ -191,7 +192,8 @@ class Thread extends HookConsumerWidget {
                               ],
                             ),
                             isLoading
-                                ? ListView.builder(
+                                ? CircularProgressIndicator()
+                                : ListView.builder(
                                     shrinkWrap: true,
                                     itemCount: threads!.length,
                                     itemBuilder:
@@ -284,7 +286,6 @@ class Thread extends HookConsumerWidget {
                                         ),
                                       );
                                     })
-                                : CircularProgressIndicator(),
                           ],
                         ),
                       ),

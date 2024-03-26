@@ -15,6 +15,7 @@ class _ThreadsNotifier extends ChangeNotifier {
     notifyListeners();
 
     final response = await ThreadsAPI.getThreads(topicId);
+
     if (response != null) {
       threads = response;
     }
