@@ -17,6 +17,16 @@ class Dashboard extends ConsumerStatefulWidget {
 }
 
 class _DashboardState extends ConsumerState<Dashboard> {
+  final ScrollController _scrollController = ScrollController();
+
+  void scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
+  }
+
   int pageIndex = 0;
   int? _selectedTabContent = 0;
 
@@ -37,6 +47,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
             SizedBox(
@@ -232,7 +243,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     Forums(updateParentIndex: updateIndex),
                     Events(context),
                     Thread(updateParentIndex: updateIndex),
-                    Post(),
+                    Post(scrollToBottom: scrollToBottom),
                     CreateThread()
                   ][pageIndex],
                 ),

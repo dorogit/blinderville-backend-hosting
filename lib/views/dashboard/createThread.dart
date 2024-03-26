@@ -1,3 +1,5 @@
+import 'package:blinderville/api/forums/threads_api.dart';
+import 'package:blinderville/controller/forum/forum.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -6,6 +8,22 @@ class CreateThread extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final TextEditingController titleController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
+    final currentTopic = ref.watch(currentTopicProvider);
+
+    void submitThread() async {
+      String title = titleController.text;
+      String description = descriptionController.text;
+
+      final test = await ThreadsAPI.postThread(currentTopic.currentTopicId,
+          title, description, "65e1de6457cc231714ee711c");
+      print(test);
+
+      print('Title: $title');
+      print('Description: $description');
+    }
+
     return Column(
       children: [
         Card(
@@ -37,6 +55,7 @@ class CreateThread extends HookConsumerWidget {
               SizedBox(
                 height: 75,
                 child: TextField(
+                  controller: titleController,
                   style: TextStyle(fontSize: 12),
                   maxLines: 3,
                   decoration: InputDecoration(
@@ -53,10 +72,11 @@ class CreateThread extends HookConsumerWidget {
               Divider(indent: 20, endIndent: 20),
               SizedBox(height: 25),
               SizedBox(
-                height: 100,
+                height: 325,
                 child: TextField(
+                  controller: descriptionController,
                   style: TextStyle(fontSize: 12),
-                  maxLines: 3,
+                  maxLines: 14,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -65,6 +85,35 @@ class CreateThread extends HookConsumerWidget {
                     hintStyle: TextStyle(fontSize: 12),
                     hintText: "Thread description",
                   ),
+                ),
+              ),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.message),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.image),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.preview),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 40,
+                width: 100,
+                child: FloatingActionButton(
+                  backgroundColor: Color.fromARGB(255, 120, 67, 255),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  onPressed: () {
+                    submitThread();
+                  },
+                  child: Text("Post"),
                 ),
               ),
             ],

@@ -197,26 +197,26 @@ packages:
     dependency: "direct dev"
     description:
       name: custom_lint
-      sha256: "445242371d91d2e24bd7b82e3583a2c05610094ba2d0575262484ad889c8f981"
+      sha256: "7c0aec12df22f9082146c354692056677f1e70bc43471644d1fdb36c6fdda799"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.2"
+    version: "0.6.4"
   custom_lint_builder:
     dependency: transitive
     description:
       name: custom_lint_builder
-      sha256: "4c0aed2a3491096e91cf1281923ba1b6814993f16dde0fd60f697925225bbbd6"
+      sha256: d7dc41e709dde223806660268678be7993559e523eb3164e2a1425fd6f7615a9
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.2"
+    version: "0.6.4"
   custom_lint_core:
     dependency: transitive
     description:
       name: custom_lint_core
-      sha256: ce5d6215f4e143f7780ce53f73dfa6fc503f39d2d30bef76c48be9ac1a09d9a6
+      sha256: a85e8f78f4c52f6c63cdaf8c872eb573db0231dcdf3c3a5906d493c1f8bc20e6
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.2"
+    version: "0.6.3"
   dart_style:
     dependency: transitive
     description:
@@ -229,10 +229,10 @@ packages:
     dependency: "direct main"
     description:
       name: dio
-      sha256: "49af28382aefc53562459104f64d16b9dfd1e8ef68c862d5af436cc8356ce5a8"
+      sha256: "50fec96118958b97c727d0d8f67255d3683f16cc1f90d9bc917b5d4fe3abeca9"
       url: "https://pub.dev"
     source: hosted
-    version: "5.4.1"
+    version: "5.4.2"
   fake_async:
     dependency: transitive
     description:
@@ -332,10 +332,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "170c46e237d6eb0e6e9f0e8b3f56101e14fb64f787016e42edd74c39cf8b176a"
+      sha256: "7ecb2f391edbca5473db591b48555a8912dde60edd0fb3013bd6743033b2d3f8"
       url: "https://pub.dev"
     source: hosted
-    version: "13.2.0"
+    version: "13.2.1"
   graphs:
     dependency: transitive
     description:
@@ -673,26 +673,26 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_calendar
-      sha256: "57cca039b31d49844de6681ad039216dd098da7b9e7acffeee5e7075a4978416"
+      sha256: "2a41662f56368fc2dc63dd4b41e817470e031ee4cbc56121cd2edc6960ecf2f6"
       url: "https://pub.dev"
     source: hosted
-    version: "24.2.9"
+    version: "25.1.35"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "7666506885ebc8f62bb928ad4588a73e20caaff2b2cf2b2b56f67d98f4113525"
+      sha256: eac3cbf2278fa4993d9b97d92d050973025deebfbff970109843640dc770888c
       url: "https://pub.dev"
     source: hosted
-    version: "24.2.9"
+    version: "25.1.35"
   syncfusion_flutter_datepicker:
     dependency: transitive
     description:
       name: syncfusion_flutter_datepicker
-      sha256: c010440ccef2beecb988684af3557c57ade8ea300d1177536f01059e3a16ce5d
+      sha256: "37e0c694110d106aab43e6ab7b1823fc95db143c5038c6b7aaf3054b8f97db1d"
       url: "https://pub.dev"
     source: hosted
-    version: "24.2.9"
+    version: "25.1.35"
   term_glyph:
     dependency: transitive
     description:

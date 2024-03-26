@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class _ThreadsNotifier extends ChangeNotifier {
   final String topicId;
   bool isLoading = false;
+  String currentThreadId = "";
   List<Map<String, dynamic>>? threads;
 
   _ThreadsNotifier({required this.topicId});
@@ -20,6 +21,11 @@ class _ThreadsNotifier extends ChangeNotifier {
       threads = response;
     }
     isLoading = false;
+    notifyListeners();
+  }
+
+  void setCurrentThreadId(String threadId) {
+    currentThreadId = threadId;
     notifyListeners();
   }
 }

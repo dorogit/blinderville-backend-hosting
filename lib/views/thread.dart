@@ -191,11 +191,11 @@ class Thread extends HookConsumerWidget {
                                 ),
                               ],
                             ),
-                            isLoading
+                            (isLoading || threads == null)
                                 ? CircularProgressIndicator()
                                 : ListView.builder(
                                     shrinkWrap: true,
-                                    itemCount: threads!.length,
+                                    itemCount: threads.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       var thread = threads[index];
@@ -222,6 +222,9 @@ class Thread extends HookConsumerWidget {
                                                                     .circular(
                                                                         10)),
                                                     onPressed: () {
+                                                      currentThreadsProvider
+                                                          .setCurrentThreadId(
+                                                              thread['_id']);
                                                       updateParentIndex(5);
                                                     },
                                                     child: ListTile(
