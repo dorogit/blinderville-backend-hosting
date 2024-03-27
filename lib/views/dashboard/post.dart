@@ -33,12 +33,8 @@ class Post extends HookConsumerWidget {
       String title = titleController.text;
       String description = descriptionController.text;
 
-      final test = await PostAPI.post(
+      PostAPI.post(
           threadId, title, description, "65e1de6457cc231714ee711c", false);
-      print(test);
-
-      print('Title: $title');
-      print('Description: $description');
     }
 
     return Column(children: [
@@ -80,9 +76,13 @@ class Post extends HookConsumerWidget {
               SizedBox(
                 width: 20,
               ),
-              Text(
-                currentThread?['name'],
-                textScaler: TextScaler.linear(1.3),
+              Flexible(
+                child: Text(
+                  currentThread?['name'],
+                  textScaler: TextScaler.linear(1.3),
+                  maxLines: 1,
+                  style: TextStyle(overflow: TextOverflow.ellipsis),
+                ),
               ),
             ],
           ),
@@ -200,7 +200,7 @@ class Post extends HookConsumerWidget {
                           ),
                         ),
                         child: SizedBox(
-                          height: 400,
+                          height: 435,
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Column(
@@ -216,7 +216,8 @@ class Post extends HookConsumerWidget {
                                 ),
                                 Divider(indent: 20, endIndent: 20),
                                 SizedBox(height: 10),
-                                Text(currentThread?['description']),
+                                Flexible(
+                                    child: Text(currentThread?['description'])),
                               ],
                             ),
                           ),
@@ -349,78 +350,40 @@ class Post extends HookConsumerWidget {
                                 padding: const EdgeInsets.all(20.0),
                                 child: Column(
                                   children: [
+                                    SizedBox(height: 10),
                                     ListTile(
-                                      title: Text(
-                                          currentThread?['posts'][index]
-                                              ['title'],
-                                          textScaler: TextScaler.linear(1.2)),
-                                      trailing: IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.chat)),
+                                      title: Text(currentThread?['posts'][index]
+                                          ['createdAt']),
                                     ),
-                                    Divider(indent: 20, endIndent: 20),
+                                    Divider(endIndent: 10, indent: 10),
                                     SizedBox(height: 10),
                                     ListTile(
                                       title: Text(currentThread?['posts'][index]
                                           ['description']),
-                                      trailing: IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.chat)),
                                     ),
-                                    Container(
-                                      alignment: FractionalOffset.centerLeft,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Color.fromARGB(255, 28, 27, 30),
-                                        border: Border(
-                                          left: BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 109, 29, 249),
-                                            width: 5,
-                                          ),
-                                          bottom: BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 109, 29, 249),
-                                            width: 3,
-                                          ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                    Icons.thumb_down_outlined)),
+                                            Text('5'),
+                                            IconButton(
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                    Icons.thumb_up_outlined))
+                                          ],
                                         ),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Center(child: Text("Replies")),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        height: 250,
-                                        child: ListView.builder(
-                                            itemCount: 3,
-                                            itemBuilder:
-                                                (BuildContext context, index) {
-                                              return Card(
-                                                child: Padding(
-                                                    padding: EdgeInsets.all(20),
-                                                    child: Column(
-                                                      children: [
-                                                        ListTile(
-                                                          title: Text(
-                                                              "Posted by: Ishaan Jain"),
-                                                          subtitle: Text(
-                                                              "Date: 666/66/6666"),
-                                                          trailing: IconButton(
-                                                              onPressed: () {},
-                                                              icon: Icon(Icons
-                                                                  .more_horiz_outlined)),
-                                                        ),
-                                                        Divider(
-                                                            indent: 15,
-                                                            endIndent: 15),
-                                                        ListTile(
-                                                            title: Text(
-                                                                'This is a reply'))
-                                                      ],
-                                                    )),
-                                              );
-                                            }))
+                                        IconButton(
+                                            onPressed: () {},
+                                            icon:
+                                                Icon(Icons.format_quote_sharp))
+                                      ],
+                                    )
                                   ],
                                 ),
                               ),
@@ -556,21 +519,6 @@ class Post extends HookConsumerWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          TextField(
-                            controller: titleController,
-                            style: TextStyle(fontSize: 12),
-                            maxLines: 1,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              filled: true,
-                              hintStyle: TextStyle(fontSize: 12),
-                              hintText: "Title",
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Divider(indent: 20, endIndent: 20),
                           SizedBox(height: 20),
                           TextField(
                             controller: descriptionController,

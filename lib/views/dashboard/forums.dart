@@ -1,5 +1,4 @@
 import 'package:blinderville/controller/forum/forum.dart';
-import 'package:blinderville/controller/forum/threads.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
