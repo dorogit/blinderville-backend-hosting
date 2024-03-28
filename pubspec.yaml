@@ -42,6 +42,7 @@ dependencies:
   dio: ^5.4.1
   popover: ^0.3.0
   flutter_riverpod: ^2.5.1
+  flutter_animate: ^4.5.0
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,12 @@ flutter:
   assets:
     - assets/images/logo1.png
     - assets/images/profilePicture.jpg
+    - assets/images/1.png
+    - assets/images/3.png
+    - assets/images/4.png
+    - assets/images/5.png
+    - assets/images/6.png
+    - assets/images/7.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

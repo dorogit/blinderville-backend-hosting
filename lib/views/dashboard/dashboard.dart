@@ -7,6 +7,7 @@ import 'package:blinderville/views/dashboard/profile.dart';
 import 'package:blinderville/views/thread.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
@@ -84,11 +85,11 @@ class _DashboardState extends ConsumerState<Dashboard> {
                       IconButton(
                           onPressed: () {}, icon: Icon(Icons.notifications)),
                       SizedBox(width: 30),
-                      CircleAvatar(
-                        maxRadius: 15,
-                        backgroundImage:
-                            AssetImage('assets/images/profilePicture.jpg'),
-                      ),
+                      FilledButton(
+                          onPressed: () {
+                            context.go('/signup');
+                          },
+                          child: const Text('Sign Up'))
                     ],
                   )
                 ],
