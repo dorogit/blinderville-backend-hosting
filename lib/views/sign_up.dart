@@ -27,13 +27,17 @@ class _SignUpState extends ConsumerState<SignUp> {
     return Scaffold(
       body: Center(
           child: Card(
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(35.0),
+        ),
         child: SizedBox(
           height: screenHeight * 0.7,
           width: cardWidth,
           child: Flexible(
             child: [
               initialWidget(screenHeight, cardWidth),
-              secondWidget()
+              secondWidget(screenHeight, cardWidth)
             ][pageIndex],
           ),
         ),
@@ -133,22 +137,45 @@ class _SignUpState extends ConsumerState<SignUp> {
     );
   }
 
-  Widget secondWidget() {
+  Widget secondWidget(
+    double screenHeight,
+    double cardWidth,
+  ) {
     return Row(
       children: [
-        Expanded(
-            flex: 4, child: Image(image: AssetImage('assets/images/3.png'))),
+        Image(
+            image: AssetImage('assets/images/3.png'), height: double.infinity),
         Expanded(
           flex: 6,
           child: Column(
             children: [
-              ListTile(
-                title: Text(
-                  'Welcome to Blinderville',
-                  textScaler: TextScaler.linear(1.8),
-                  style: TextStyle(color: Color.fromARGB(255, 120, 67, 255)),
+              SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          'WELCOME TO',
+                          textScaler: TextScaler.linear(2.8),
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 120, 67, 255)),
+                        ),
+                        Text(
+                          'BLINDERVILLE',
+                          textScaler: TextScaler.linear(2.8),
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 120, 67, 255)),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              )
+              ),
+              SizedBox(height: 50),
+              Text("THE BASICS"),
+              SizedBox(height: 50),
             ],
           ),
         )
