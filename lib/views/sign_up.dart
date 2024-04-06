@@ -33,7 +33,7 @@ class _SignUpState extends ConsumerState<SignUp> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final cardWidth = screenWidth * 0.6;
+    final cardWidth = screenWidth * 0.8;
 
     return Scaffold(
       body: Center(
@@ -248,7 +248,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.grey),
                 ),
-                SizedBox(height: screenHeight / 8),
+                SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
