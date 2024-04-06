@@ -12,11 +12,22 @@ class SignUp extends ConsumerStatefulWidget {
 class _SignUpState extends ConsumerState<SignUp> {
   int pageIndex = 0;
 
-  void updateIndex(int newIndex) {
+  void incrementIndex() {
     setState(() {
-      pageIndex = newIndex;
+      pageIndex = pageIndex + 1;
     });
   }
+
+  void decrementIndex() {
+    setState(() {
+      pageIndex = pageIndex - 1;
+    });
+  }
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController zipcodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +48,38 @@ class _SignUpState extends ConsumerState<SignUp> {
           child: Flexible(
             child: [
               initialWidget(screenHeight, cardWidth),
-              secondWidget(screenHeight, cardWidth)
+              userDataWidget(
+                  screenHeight,
+                  cardWidth,
+                  emailController,
+                  "Your Email",
+                  AssetImage('assets/images/3.png'),
+                  Icon(Icons.mail),
+                  "Your email will not be visible to others."),
+              userDataWidget(
+                  screenHeight,
+                  cardWidth,
+                  passwordController,
+                  "Make a password",
+                  AssetImage('assets/images/4.png'),
+                  Icon(Icons.password),
+                  "To have a secure password, please make sure it is greater than 8 characters, and contains special characters and numbers."),
+              userDataWidget(
+                  screenHeight,
+                  cardWidth,
+                  usernameController,
+                  "Create a username",
+                  AssetImage('assets/images/5.png'),
+                  Icon(Icons.person),
+                  "Your username is how other people will identify you, so make sure it's a nice one!"),
+              userDataWidget(
+                  screenHeight,
+                  cardWidth,
+                  zipcodeController,
+                  "Your zipcode",
+                  AssetImage('assets/images/6.png'),
+                  Icon(Icons.location_city_rounded),
+                  "Your zipcode is required so we can show you what's happening around you! Don't worry, nobody can see it except us!")
             ][pageIndex],
           ),
         ),
@@ -129,7 +171,7 @@ class _SignUpState extends ConsumerState<SignUp> {
         SizedBox(height: 15),
         FilledButton(
             onPressed: () {
-              updateIndex(1);
+              incrementIndex();
             },
             child: const Text('Join Blinderville')),
         SizedBox(height: 25),
@@ -137,46 +179,99 @@ class _SignUpState extends ConsumerState<SignUp> {
     );
   }
 
-  Widget secondWidget(
-    double screenHeight,
-    double cardWidth,
-  ) {
+  Widget userDataWidget(
+      double screenHeight,
+      double cardWidth,
+      TextEditingController emailController,
+      String label,
+      AssetImage image,
+      Icon labelIcon,
+      String infoText) {
     return Row(
       children: [
-        Image(
-            image: AssetImage('assets/images/3.png'), height: double.infinity),
+        Image(image: image, height: double.infinity),
         Expanded(
           flex: 6,
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: Row(
+          child: Padding(
+            padding: const EdgeInsets.all(50.0),
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Row(
                   children: [
                     Column(
                       children: [
                         Text(
                           'WELCOME TO',
-                          textScaler: TextScaler.linear(2.8),
+                          textScaler: TextScaler.linear(3),
                           style: TextStyle(
+                              fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 120, 67, 255)),
                         ),
                         Text(
                           'BLINDERVILLE',
                           textScaler: TextScaler.linear(2.8),
                           style: TextStyle(
+                              fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 120, 67, 255)),
                         ),
                       ],
                     ),
                   ],
                 ),
-              ),
-              SizedBox(height: 50),
-              Text("THE BASICS"),
-              SizedBox(height: 50),
-            ],
+                SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text(
+                      'THE BASICS',
+                      textScaler: TextScaler.linear(2),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 120, 67, 255)),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 50),
+                TextField(
+                  controller: emailController,
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                      prefixIcon: labelIcon,
+                      labelText: label,
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)))),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  infoText,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.grey),
+                ),
+                SizedBox(height: screenHeight / 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FilledButton(
+                        onPressed: () {
+                          decrementIndex();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 15, 30, 15),
+                          child: Text('Back'),
+                        )),
+                    FilledButton(
+                        onPressed: () {
+                          incrementIndex();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 15, 30, 15),
+                          child: Text('Next'),
+                        ))
+                  ],
+                )
+              ],
+            ),
           ),
         )
       ],
