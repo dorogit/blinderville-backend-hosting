@@ -33,7 +33,7 @@ class _SignUpState extends ConsumerState<SignUp> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final cardWidth = screenWidth * 0.8;
+    final cardWidth = screenWidth * 0.6;
 
     return Scaffold(
       body: Center(
@@ -55,7 +55,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                   "Your Email",
                   AssetImage('assets/images/3.png'),
                   Icon(Icons.mail),
-                  "Your email will not be visible to others."),
+                  "Your email will not be visible to others. It is required to create an account."),
               userDataWidget(
                   screenHeight,
                   cardWidth,
@@ -186,7 +186,11 @@ class _SignUpState extends ConsumerState<SignUp> {
       String label,
       AssetImage image,
       Icon labelIcon,
-      String infoText) {
+      String infoText,
+      {Widget? customWidget,
+      String? titleLine1,
+      String? titleLine2,
+      String? subtitle}) {
     return Row(
       children: [
         Image(image: image, height: double.infinity),
@@ -202,15 +206,15 @@ class _SignUpState extends ConsumerState<SignUp> {
                     Column(
                       children: [
                         Text(
-                          'WELCOME TO',
-                          textScaler: TextScaler.linear(3),
+                          titleLine1 ?? 'WELCOME TO',
+                          textScaler: TextScaler.linear(2.5),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 120, 67, 255)),
                         ),
                         Text(
-                          'BLINDERVILLE',
-                          textScaler: TextScaler.linear(2.8),
+                          titleLine2 ?? 'BLINDERVILLE',
+                          textScaler: TextScaler.linear(2.3),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 120, 67, 255)),
@@ -223,7 +227,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                 Row(
                   children: [
                     Text(
-                      'THE BASICS',
+                      subtitle ?? 'THE BASICS',
                       textScaler: TextScaler.linear(2),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -248,7 +252,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.grey),
                 ),
-                SizedBox(height: 10),
+                Expanded(child: Container()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -257,7 +261,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                           decrementIndex();
                         },
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(30, 15, 30, 15),
+                          padding: const EdgeInsets.fromLTRB(10, 7, 7, 10),
                           child: Text('Back'),
                         )),
                     FilledButton(
@@ -265,7 +269,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                           incrementIndex();
                         },
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(30, 15, 30, 15),
+                          padding: const EdgeInsets.fromLTRB(10, 7, 7, 10),
                           child: Text('Next'),
                         ))
                   ],
