@@ -854,7 +854,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                     }),
               )),
           Padding(
-            padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+            padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -917,7 +917,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                   fontWeight: FontWeight.bold,
                 )),
             SizedBox(height: 12),
-            Text("Participate in the forum, and have fun!.",
+            Text("Participate in the forum, and have fun!",
                 textScaler: TextScaler.linear(1.2),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
