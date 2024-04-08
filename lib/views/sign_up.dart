@@ -33,8 +33,25 @@ class _SignUpState extends ConsumerState<SignUp> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final cardWidth = screenWidth * 0.6;
-
+    final cardWidth = screenWidth * 0.7;
+    const List<String> genderList = <String>[
+      'Agender',
+      'Androgyne',
+      'Bigender',
+      'Butch',
+      'Cis-Male',
+      'Cis-Female',
+      'Gender Expansive',
+      'Gender Fluid',
+      'Gender Outlaw',
+      'Genderqueer',
+      'Non-Binary',
+      'Omnigender',
+      'Polygender/Pangender',
+      'Trans-Male',
+      'Trans-Female',
+      'Other'
+    ];
     return Scaffold(
       body: Center(
           child: Card(
@@ -43,7 +60,7 @@ class _SignUpState extends ConsumerState<SignUp> {
           borderRadius: BorderRadius.circular(35.0),
         ),
         child: SizedBox(
-          height: screenHeight * 0.7,
+          height: screenHeight * 0.65,
           width: cardWidth,
           child: Flexible(
             child: [
@@ -77,13 +94,85 @@ class _SignUpState extends ConsumerState<SignUp> {
                   cardWidth,
                   zipcodeController,
                   "Your zipcode",
-                  AssetImage('assets/images/6.png'),
+                  AssetImage('assets/images/7.png'),
                   Icon(Icons.location_city_rounded),
-                  "Your zipcode is required so we can show you what's happening around you! Don't worry, nobody can see it except us!")
+                  "This info will NOT be available to others unless you choose to make it available. You will NOT be able to change this unless a special request is made and granted, and typically only once.",
+                  customWidget: genderRow(genderList),
+                  titleLine1: "THANKS FOR",
+                  titleLine2: "JOINING US!",
+                  subtitle: "ABOUT YOU"),
             ][pageIndex],
           ),
         ),
       )),
+    );
+  }
+
+  Widget genderRow(List<String> genderList) {
+    String dropDownValue = genderList.first;
+    TextEditingController otherGenderController = TextEditingController();
+    bool isOtherSelected = false;
+
+    @override
+    void initState() {
+      super.initState();
+      dropDownValue = genderList.first;
+      otherGenderController = TextEditingController();
+    }
+
+    @override
+    void dispose() {
+      otherGenderController.dispose();
+      super.dispose();
+    }
+
+    return Row(
+      children: [
+        Text('I am', style: TextStyle(fontSize: 24)),
+        SizedBox(width: 50),
+        Expanded(
+          child: isOtherSelected
+              ? TextFormField(
+                  controller: otherGenderController,
+                  decoration: InputDecoration(
+                    labelText: 'Specify your gender',
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  ),
+                )
+              : DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: 'Select your gender',
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  ),
+                  value: dropDownValue,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropDownValue = newValue!;
+                      isOtherSelected = newValue == "Other";
+                      if (!isOtherSelected) {
+                        // Reset the controller if "Other" is not selected
+                        otherGenderController.clear();
+                      }
+                    });
+                  },
+                  items:
+                      genderList.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+        ),
+      ],
     );
   }
 
@@ -103,7 +192,7 @@ class _SignUpState extends ConsumerState<SignUp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: screenHeight * 0.15,
+              height: screenHeight * 0.1,
               child: Image(
                 image: AssetImage('assets/images/logo1.png'),
               ).animate().fadeIn(duration: 1000.ms),
@@ -204,15 +293,18 @@ class _SignUpState extends ConsumerState<SignUp> {
                 Row(
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
+                          textAlign: TextAlign.left,
                           titleLine1 ?? 'WELCOME TO',
-                          textScaler: TextScaler.linear(2.5),
+                          textScaler: TextScaler.linear(2.3),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 120, 67, 255)),
                         ),
                         Text(
+                          textAlign: TextAlign.left,
                           titleLine2 ?? 'BLINDERVILLE',
                           textScaler: TextScaler.linear(2.3),
                           style: TextStyle(
@@ -223,7 +315,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                     ),
                   ],
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: screenHeight / 25),
                 Row(
                   children: [
                     Text(
@@ -235,17 +327,19 @@ class _SignUpState extends ConsumerState<SignUp> {
                     ),
                   ],
                 ),
-                SizedBox(height: 50),
-                TextField(
-                  controller: emailController,
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                      prefixIcon: labelIcon,
-                      labelText: label,
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)))),
-                ),
+                SizedBox(height: screenHeight / 25),
+                customWidget ??
+                    TextField(
+                      controller: emailController,
+                      maxLines: 1,
+                      decoration: InputDecoration(
+                          prefixIcon: labelIcon,
+                          labelText: label,
+                          filled: true,
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)))),
+                    ),
                 SizedBox(height: 10),
                 Text(
                   infoText,
