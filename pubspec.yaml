@@ -43,6 +43,10 @@ dependencies:
   popover: ^0.3.0
   flutter_riverpod: ^2.5.1
   flutter_animate: ^4.5.0
+  autocomplete_textfield: ^2.0.1
+  dropdown_search: ^5.0.6
+  image_picker_for_web: ^3.0.3
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

@@ -11,6 +11,49 @@ class SignUp extends ConsumerStatefulWidget {
 
 class _SignUpState extends ConsumerState<SignUp> {
   int pageIndex = 0;
+  String dropDownValue = 'Agender'; // Default value
+  TextEditingController otherGenderController = TextEditingController();
+  bool isOtherSelected = false;
+  bool isChecked = false;
+  bool isChecked2 = false;
+  List<String> infoList = [
+    "Birthday",
+    "Height",
+    "Weight",
+    "Race",
+    "Kids",
+    "Education",
+    "Smokes",
+    "Religion",
+    "Occupation",
+    "Political View",
+    "Social Media",
+    "Share Gender ID"
+  ];
+
+  List goodStuffList = [
+    "DESCRIBE YOURSELF MORE FULLY",
+    "Give us the details",
+    "WHAT DO YOU KNOW TO BE TRUE?",
+    "Come up with something nice",
+    "WHAT DO YOU WANT OUT OF LIFE?",
+    "It can be anything",
+    "WHAT TURNS YOU ON?",
+    "Don't be shy",
+    "PET PEEVES?",
+    "We all have 'em"
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    otherGenderController.dispose();
+    super.dispose();
+  }
 
   void incrementIndex() {
     setState(() {
@@ -60,76 +103,92 @@ class _SignUpState extends ConsumerState<SignUp> {
           borderRadius: BorderRadius.circular(35.0),
         ),
         child: SizedBox(
-          height: screenHeight * 0.65,
+          height: screenHeight * 0.7,
           width: cardWidth,
-          child: Flexible(
-            child: [
-              initialWidget(screenHeight, cardWidth),
-              userDataWidget(
-                  screenHeight,
-                  cardWidth,
-                  emailController,
-                  "Your Email",
-                  AssetImage('assets/images/3.png'),
-                  Icon(Icons.mail),
-                  "Your email will not be visible to others. It is required to create an account."),
-              userDataWidget(
-                  screenHeight,
-                  cardWidth,
-                  passwordController,
-                  "Make a password",
-                  AssetImage('assets/images/4.png'),
-                  Icon(Icons.password),
-                  "To have a secure password, please make sure it is greater than 8 characters, and contains special characters and numbers."),
-              userDataWidget(
-                  screenHeight,
-                  cardWidth,
-                  usernameController,
-                  "Create a username",
-                  AssetImage('assets/images/5.png'),
-                  Icon(Icons.person),
-                  "Your username is how other people will identify you, so make sure it's a nice one!"),
-              userDataWidget(
-                  screenHeight,
-                  cardWidth,
-                  zipcodeController,
-                  "Your zipcode",
-                  AssetImage('assets/images/7.png'),
-                  Icon(Icons.location_city_rounded),
-                  "This info will NOT be available to others unless you choose to make it available. You will NOT be able to change this unless a special request is made and granted, and typically only once.",
-                  customWidget: genderRow(genderList),
-                  titleLine1: "THANKS FOR",
-                  titleLine2: "JOINING US!",
-                  subtitle: "ABOUT YOU"),
-            ][pageIndex],
-          ),
+          child: [
+            initialWidget(screenHeight, cardWidth),
+            userDataWidget(
+                screenHeight,
+                cardWidth,
+                emailController,
+                "Your Email",
+                AssetImage('assets/images/3.png'),
+                Icon(Icons.mail),
+                "Your email will not be visible to others. It is required to create an account."),
+            userDataWidget(
+                screenHeight,
+                cardWidth,
+                passwordController,
+                "Make a password",
+                AssetImage('assets/images/4.png'),
+                Icon(Icons.password),
+                "To have a secure password, please make sure it is greater than 8 characters, and contains special characters and numbers."),
+            userDataWidget(
+                screenHeight,
+                cardWidth,
+                usernameController,
+                "Create a username",
+                AssetImage('assets/images/5.png'),
+                Icon(Icons.person),
+                "Your username is how other people will identify you, so make sure it's a nice one!"),
+            userDataWidget(
+                screenHeight,
+                cardWidth,
+                zipcodeController,
+                "Your zipcode",
+                AssetImage('assets/images/7.png'),
+                Icon(Icons.location_city_rounded),
+                "This info will NOT be available to others unless you choose to make it available. You will NOT be able to change this unless a special request is made and granted, and typically only once. Please click next if you want to skip for now",
+                customWidget: genderRow(genderList),
+                titleLine1: "THANKS FOR",
+                titleLine2: "JOINING US!",
+                subtitle: "ABOUT YOU"),
+            userDataWidget(
+                screenHeight,
+                cardWidth,
+                zipcodeController,
+                "Your zipcode",
+                AssetImage('assets/images/3.png'),
+                Icon(Icons.location_city_rounded),
+                "This will be visible to others. Click NEXT if you want to skip now.",
+                customWidget: introBox(screenHeight),
+                titleLine1: "THANKS FOR",
+                titleLine2: "JOINING US!",
+                subtitle: "ABOUT YOU"),
+            informationWidget(screenHeight),
+            imageWidget(screenHeight),
+            goodStuff(screenHeight),
+            finishWidget()
+          ][pageIndex],
         ),
       )),
     );
   }
 
+  Widget introBox(screenHeight) {
+    return SizedBox(
+      height: screenHeight / 8,
+      child: TextField(
+        maxLength: 140,
+        style: TextStyle(fontSize: 12),
+        maxLines: 14,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          filled: true,
+          hintStyle: TextStyle(fontSize: 12),
+          hintText: "Describe yourself!",
+        ),
+      ),
+    );
+  }
+
   Widget genderRow(List<String> genderList) {
-    String dropDownValue = genderList.first;
-    TextEditingController otherGenderController = TextEditingController();
-    bool isOtherSelected = false;
-
-    @override
-    void initState() {
-      super.initState();
-      dropDownValue = genderList.first;
-      otherGenderController = TextEditingController();
-    }
-
-    @override
-    void dispose() {
-      otherGenderController.dispose();
-      super.dispose();
-    }
-
     return Row(
       children: [
         Text('I am', style: TextStyle(fontSize: 24)),
-        SizedBox(width: 50),
+        SizedBox(width: 30),
         Expanded(
           child: isOtherSelected
               ? TextFormField(
@@ -139,8 +198,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
+                        borderRadius: BorderRadius.circular(15.0)),
                   ),
                 )
               : DropdownButtonFormField<String>(
@@ -149,18 +207,13 @@ class _SignUpState extends ConsumerState<SignUp> {
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
+                        borderRadius: BorderRadius.circular(15.0)),
                   ),
                   value: dropDownValue,
                   onChanged: (String? newValue) {
                     setState(() {
                       dropDownValue = newValue!;
                       isOtherSelected = newValue == "Other";
-                      if (!isOtherSelected) {
-                        // Reset the controller if "Other" is not selected
-                        otherGenderController.clear();
-                      }
                     });
                   },
                   items:
@@ -374,5 +427,509 @@ class _SignUpState extends ConsumerState<SignUp> {
         )
       ],
     );
+  }
+
+  Widget informationWidget(double screenHeight) {
+    return Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(children: [
+          Text('YOU CONTROL YOUR INFORMATION!',
+              textScaler: TextScaler.linear(2),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                  color: Color.fromARGB(255, 244, 180, 68))),
+          SizedBox(height: 10),
+          Text(
+            'NOW THINGS ARE GETTING REALLY INTERESTING',
+            textScaler: TextScaler.linear(1.6),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 120, 67, 255)),
+          ),
+          Row(
+            children: [
+              Expanded(
+                  flex: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Fill in only the information you want to share.Anything you don't, just leave blank.",
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          "If others want to see what you share, YOU will get paid for it.",
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          "Content that you are willing to share must include an elaboration",
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          "You will be able to update any of this information at any time, except Gender Identity where certain rules apply*",
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          "Any information you choose to share must not be intentionally misleading. Violation of this rule may result in a permanent ban.",
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          "Don't give this information away! Let others get to know you on the inside first.",
+                        ),
+                        SizedBox(height: 15),
+                        ListTile(
+                          leading: Checkbox(
+                            value: isChecked,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                isChecked = !isChecked;
+                              });
+                            },
+                          ),
+                          title: Text(
+                            "I certify the info provided is true and accurate to the best of my knowledge. I understand that Blinderville reserves the right to suspend my account if I violate it's terms and conditions.",
+                            textScaler: TextScaler.linear(0.6),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+              Expanded(
+                flex: 6,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: screenHeight / 2.2,
+                      child: ListView.builder(
+                        itemCount: infoList.length ~/
+                            2, // Adjusted for pairs of labels
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          int pairIndex = index * 2;
+                          String label1 = infoList[pairIndex];
+                          String label2 = infoList[pairIndex + 1];
+
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  child: TextField(
+                                    maxLines: 1,
+                                    decoration: InputDecoration(
+                                        labelText: label1,
+                                        filled: true,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15)))),
+                                  ),
+                                ),
+                                SizedBox(
+                                    width:
+                                        15), // Add some space between text fields
+                                Flexible(
+                                  child: TextField(
+                                    maxLines: 1,
+                                    decoration: InputDecoration(
+                                        labelText: label2,
+                                        filled: true,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15)))),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          FilledButton(
+                              onPressed: () {
+                                decrementIndex();
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 7, 7, 10),
+                                child: Text('Back'),
+                              )),
+                          isChecked == true
+                              ? Text("")
+                              : Text("Please tick the checkbox to continue"),
+                          FilledButton(
+                              onPressed: () {
+                                if (isChecked == true) {
+                                  incrementIndex();
+                                }
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 7, 7, 10),
+                                child: Text('Next'),
+                              ))
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          )
+        ]));
+  }
+
+  Widget imageWidget(double screenHeight) {
+    return Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(children: [
+          Text('YOU CONTROL YOUR INFORMATION!',
+              textScaler: TextScaler.linear(2),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                  color: Color.fromARGB(255, 244, 180, 68))),
+          Row(
+            children: [
+              Expanded(
+                  flex: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'PHOTOS',
+                          textAlign: TextAlign.center,
+                          textScaler: TextScaler.linear(1.6),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 120, 67, 255)),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          "You are so much more than just your good looks. You are beautiful in many ways, so let your personality, not your photo, take center stage.",
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                            "However, some people really want to see your great smile. If you want to show them, you can get paid*"),
+                        SizedBox(height: 15),
+                        Text(
+                          "You do not need to share photos EVER. But if you do, there are some rules:",
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          "• You must be in the photo",
+                        ),
+                        SizedBox(height: 7),
+                        Text(
+                          "• Your whole face must be visible",
+                        ),
+                        SizedBox(height: 7),
+                        Text(
+                          "• No blurry, far away or group photos",
+                        ),
+                        SizedBox(height: 7),
+                        Text("• No illegal activity or nudes"),
+                        SizedBox(height: 15),
+                        Text("*See FAQ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 120, 67, 255))),
+                        ListTile(
+                          leading: Checkbox(
+                            value: isChecked2,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                isChecked2 = !isChecked2;
+                              });
+                            },
+                          ),
+                          title: Text(
+                            "I certify the info provided is true and accurate to the best of my knowledge. I understand that Blinderville reserves the right to suspend my account if I violate it's terms and conditions.",
+                            textScaler: TextScaler.linear(0.6),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+              Expanded(
+                  flex: 6,
+                  child: Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Column(
+                      children: [
+                        Text(
+                          "",
+                          textScaler: TextScaler.linear(1.6),
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                color: Colors.black38,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(60.0),
+                                  child: Icon(
+                                    Icons.image,
+                                    size: 40,
+                                  ),
+                                )),
+                            SizedBox(width: 10),
+                            Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                color: Colors.black38,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(60.0),
+                                  child: Icon(
+                                    Icons.image,
+                                    size: 40,
+                                  ),
+                                )),
+                            SizedBox(width: 10),
+                            Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                color: Colors.black38,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(60.0),
+                                  child: Icon(
+                                    Icons.image,
+                                    size: 40,
+                                  ),
+                                )),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 300,
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Upload as many photos as you want or none at all. It's up to you!",
+                                    ),
+                                    SizedBox(height: 7),
+                                    Text(
+                                      "Photos with a description or caption garner more views.",
+                                    ),
+                                    SizedBox(height: 7),
+                                    Text(
+                                      "Photos will be vetted to ensure Blinderville rules are followed. This may take up to two days.",
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                color: Colors.black38,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(60.0),
+                                  child: Icon(
+                                    Icons.add,
+                                    size: 42,
+                                  ),
+                                )),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              FilledButton(
+                                  onPressed: () {
+                                    decrementIndex();
+                                  },
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 7, 7, 10),
+                                    child: Text('Back'),
+                                  )),
+                              isChecked2 == true
+                                  ? Text("")
+                                  : Text(
+                                      "Please tick the checkbox to continue"),
+                              FilledButton(
+                                  onPressed: () {
+                                    if (isChecked2 == true) {
+                                      incrementIndex();
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 7, 7, 10),
+                                    child: Text('Next'),
+                                  ))
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+            ],
+          )
+        ]));
+  }
+
+  Widget goodStuff(double screenHeight) {
+    return Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(children: [
+          Text('YOU CONTROL YOUR INFORMATION!',
+              textScaler: TextScaler.linear(2),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                  color: Color.fromARGB(255, 244, 180, 68))),
+          SizedBox(height: 10),
+          Text(
+            "Help others get to know you better. Your responses will be visible to others. Be as thoughtful as you'd like.You can update or change your responses at any time.",
+            textScaler: TextScaler.linear(1.2),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Padding(
+              padding: EdgeInsets.all(20),
+              child: SizedBox(
+                height: screenHeight / 2.2,
+                child: ListView.builder(
+                    itemCount: goodStuffList.length ~/
+                        2, // Adjusted for pairs of labels
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      int pairIndex = index * 2;
+                      String label1 = goodStuffList[pairIndex];
+                      String label2 = goodStuffList[pairIndex + 1];
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            label1,
+                            textAlign: TextAlign.start,
+                            textScaler: TextScaler.linear(1.3),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 120, 67, 255)),
+                          ),
+                          SizedBox(height: 20),
+                          SizedBox(
+                            height: screenHeight / 6,
+                            child: TextField(
+                              style: TextStyle(fontSize: 12),
+                              maxLines: 14,
+                              decoration: InputDecoration(
+                                label: Text(
+                                  label2,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 40),
+                        ],
+                      );
+                    }),
+              )),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                FilledButton(
+                    onPressed: () {
+                      decrementIndex();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 7, 7, 10),
+                      child: Text('Back'),
+                    )),
+                isChecked2 == true
+                    ? Text("")
+                    : Text("Please tick the checkbox to continue"),
+                FilledButton(
+                    onPressed: () {
+                      if (isChecked2 == true) {
+                        incrementIndex();
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 7, 7, 10),
+                      child: Text('Next'),
+                    ))
+              ],
+            ),
+          )
+        ]));
+  }
+
+  Widget finishWidget() {
+    return Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('CONGRATULATIONS!',
+                textScaler: TextScaler.linear(2),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2,
+                    color: Color.fromARGB(255, 244, 180, 68))),
+            SizedBox(height: 60),
+            Text("You're all done.",
+                textScaler: TextScaler.linear(1.2),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
+            SizedBox(height: 12),
+            Text("You can go see your dashboard and look around.",
+                textScaler: TextScaler.linear(1.2),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
+            SizedBox(height: 12),
+            Text("Take a crack at the question of the day.",
+                textScaler: TextScaler.linear(1.2),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
+            SizedBox(height: 12),
+            Text("Participate in the forum, and have fun!.",
+                textScaler: TextScaler.linear(1.2),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
+            SizedBox(height: 12),
+            Text("You might just find the one.",
+                textScaler: TextScaler.linear(1.2),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
+            SizedBox(height: 12),
+          ],
+        ));
   }
 }
