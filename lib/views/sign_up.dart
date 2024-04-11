@@ -1,3 +1,4 @@
+import 'package:blinderville/utilities/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,19 +17,54 @@ class _SignUpState extends ConsumerState<SignUp> {
   bool isOtherSelected = false;
   bool isChecked = false;
   bool isChecked2 = false;
-  List<String> infoList = [
-    "Birthday",
-    "Height",
-    "Weight",
-    "Race",
-    "Kids",
-    "Education",
-    "Smokes",
-    "Religion",
-    "Occupation",
-    "Political View",
-    "Social Media",
-    "Share Gender ID"
+  List<Map<String, String>> infoList = [
+    {
+      "field": "Birthday",
+      "question":
+          "Please elaborate. What does age mean to you? Do you believe that your romantic partner should be similar in age? How old is too old, and how young is too young?"
+    },
+    {
+      "field": "Height",
+      "question":
+          "How do you feel about your height? Do you have a preference in the height of your romantic partner?"
+    },
+    {
+      "field": "Weight",
+      "question":
+          "Please elaborate. What is your body type? (Athletic, Soft, Jacked, Curvy etc.) and how important is the weight of your romantic partner?"
+    },
+    {
+      "field": "Race",
+      "question":
+          "Please elaborate. What ethnicity or nationality do you identify with? Do you identify as more than one race, nationality or ethnicity? Do you have a preference for race in your partner?"
+    },
+    {"field": "Kids", "question": "Please elaborate, tell us more!"},
+    {
+      "field": "Education",
+      "question":
+          "What is your education level? Is your partner's level of education important to you?"
+    },
+    {
+      "field": "Smokes",
+      "question": "Does it matter to you if your partner smokes?"
+    },
+    {
+      "field": "Religion",
+      "question":
+          "Please elaborate. How devout are you? How important is your partner's religion to you?"
+    },
+    {
+      "field": "Occupation",
+      "question":
+          "Please elaborate. Do you enjoy what you do? How long have you been employed in this occupation? Does your partner's occupation matter?"
+    },
+    {
+      "field": "Political View",
+      "question":
+          "Please elaborate. How active are you politically? Where do you get your political information? How important are your partner's political views?"
+    },
+    {"field": "Social Media", "question": "Do you use social media?"},
+    {"field": "Share Gender ID", "question": "What do you want people to know?"}
   ];
 
   List goodStuffList = [
@@ -67,10 +103,214 @@ class _SignUpState extends ConsumerState<SignUp> {
     });
   }
 
+  void sendReq() async {
+    // Hardcoded bioQuestions object
+    Map<String, dynamic> bioQuestions = {
+      "Birthday": {
+        "primaryAnswer": birthdayController.text,
+        "secondaryAnswer": birthdayQuestionController.text,
+      },
+      "Height": {
+        "primaryAnswer": heightController.text,
+        "secondaryAnswer": heightQuestionController.text,
+      },
+      "Weight": {
+        "primaryAnswer": weightController.text,
+        "secondaryAnswer": weightQuestionController.text,
+      },
+      "Race": {
+        "primaryAnswer": raceController.text,
+        "secondaryAnswer": raceQuestionController.text,
+      },
+      "Kids": {
+        "primaryAnswer": kidsController.text,
+        "secondaryAnswer": kidsQuestionController.text,
+      },
+      "Education": {
+        "primaryAnswer": educationController.text,
+        "secondaryAnswer": educationQuestionController.text,
+      },
+      "Smokes": {
+        "primaryAnswer": smokesController.text,
+        "secondaryAnswer": smokesQuestionController.text,
+      },
+      "Religion": {
+        "primaryAnswer": religionController.text,
+        "secondaryAnswer": religionQuestionController.text,
+      },
+      "Occupation": {
+        "primaryAnswer": occupationController.text,
+        "secondaryAnswer": occupationQuestionController.text,
+      },
+      "Political View": {
+        "primaryAnswer": politicalViewController.text,
+        "secondaryAnswer": politicalViewQuestionController.text,
+      },
+      "Social Media": {
+        "primaryAnswer": socialMediaController.text,
+        "secondaryAnswer": socialMediaQuestionController.text,
+      },
+      "Share Gender ID": {
+        "primaryAnswer": shareGenderIdController.text,
+        "secondaryAnswer": shareGenderIdQuestionController.text,
+      },
+    };
+    print({
+      'username': usernameController.text,
+      'email': emailController.text,
+      'zipCode': zipcodeController.text,
+      'password': passwordController.text,
+      'bioQuestions': {
+        "test": {"test": "etst", "test": "etst"}
+      },
+    });
+
+    // Send request with bioQuestions
+    final resp = await dio.post('/users/', data: {
+      'username': usernameController.text,
+      'email': emailController.text,
+      'zipCode': zipcodeController.text,
+      'password': passwordController.text,
+      'bioQuestions': bioQuestions,
+    });
+
+    print(resp);
+    print({
+      'username': usernameController.text,
+      'email': emailController.text,
+      'zipCode': zipcodeController.text,
+      'password': passwordController.text,
+      'bioQuestions': bioQuestions,
+    });
+  }
+
+  void _showBottomSheet(
+    BuildContext context,
+    String field,
+    String question,
+    TextEditingController fieldController,
+    TextEditingController questionController,
+  ) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  controller: fieldController,
+                  style: TextStyle(fontSize: 12),
+                  maxLines: 14,
+                  decoration: InputDecoration(
+                    label: Text(field),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    filled: true,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              SizedBox(
+                height: 200,
+                child: TextField(
+                  controller: questionController,
+                  style: TextStyle(fontSize: 12),
+                  maxLines: 14,
+                  decoration: InputDecoration(
+                    label: Text(question),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    filled: true,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  // Do something with the updated field and question
+                  print("Updated Field: ${fieldController.text}");
+                  print("Updated Question: ${questionController.text}");
+                  Navigator.pop(context);
+                },
+                child: Text("Save"),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController zipcodeController = TextEditingController();
+  final TextEditingController birthdayController = TextEditingController();
+  final TextEditingController birthdayQuestionController =
+      TextEditingController();
+
+  final TextEditingController heightController = TextEditingController();
+  final TextEditingController heightQuestionController =
+      TextEditingController();
+
+  final TextEditingController weightController = TextEditingController();
+  final TextEditingController weightQuestionController =
+      TextEditingController();
+
+  final TextEditingController raceController = TextEditingController();
+  final TextEditingController raceQuestionController = TextEditingController();
+
+  final TextEditingController kidsController = TextEditingController();
+  final TextEditingController kidsQuestionController = TextEditingController();
+
+  final TextEditingController educationController = TextEditingController();
+  final TextEditingController educationQuestionController =
+      TextEditingController();
+
+  final TextEditingController smokesController = TextEditingController();
+  final TextEditingController smokesQuestionController =
+      TextEditingController();
+
+  final TextEditingController religionController = TextEditingController();
+  final TextEditingController religionQuestionController =
+      TextEditingController();
+
+  final TextEditingController occupationController = TextEditingController();
+  final TextEditingController occupationQuestionController =
+      TextEditingController();
+
+  final TextEditingController politicalViewController = TextEditingController();
+  final TextEditingController politicalViewQuestionController =
+      TextEditingController();
+
+  final TextEditingController socialMediaController = TextEditingController();
+  final TextEditingController socialMediaQuestionController =
+      TextEditingController();
+
+  final TextEditingController shareGenderIdController = TextEditingController();
+  final TextEditingController shareGenderIdQuestionController =
+      TextEditingController();
+
+  late List<List<TextEditingController>> controllerPairs = [
+    [birthdayController, birthdayQuestionController],
+    [heightController, heightQuestionController],
+    [weightController, weightQuestionController],
+    [raceController, raceQuestionController],
+    [kidsController, kidsQuestionController],
+    [educationController, educationQuestionController],
+    [smokesController, smokesQuestionController],
+    [religionController, religionQuestionController],
+    [occupationController, occupationQuestionController],
+    [politicalViewController, politicalViewQuestionController],
+    [socialMediaController, socialMediaQuestionController],
+    [shareGenderIdController, shareGenderIdQuestionController],
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -503,42 +743,64 @@ class _SignUpState extends ConsumerState<SignUp> {
                     SizedBox(
                       height: screenHeight / 2.2,
                       child: ListView.builder(
-                        itemCount: infoList.length ~/
-                            2, // Adjusted for pairs of labels
+                        itemCount: (infoList.length / 2).ceil(),
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index) {
                           int pairIndex = index * 2;
-                          String label1 = infoList[pairIndex];
-                          String label2 = infoList[pairIndex + 1];
+                          Map<String, String>? pair1 = infoList[pairIndex];
+                          Map<String, String>? pair2 =
+                              infoList.length > pairIndex + 1
+                                  ? infoList[pairIndex + 1]
+                                  : null;
 
                           return Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: Row(
                               children: [
-                                Flexible(
-                                  child: TextField(
-                                    maxLines: 1,
-                                    decoration: InputDecoration(
-                                        labelText: label1,
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15)))),
+                                Expanded(
+                                  child: FilledButton(
+                                    onPressed: () {
+                                      _showBottomSheet(
+                                        context,
+                                        pair1["field"]!,
+                                        pair1["question"] ??
+                                            "", // Provide a default value
+                                        controllerPairs[pairIndex]
+                                            [0], // Field controller
+                                        controllerPairs[pairIndex]
+                                            [1], // Question controller
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Text(pair1["field"] ?? ""),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
-                                    width:
-                                        15), // Add some space between text fields
-                                Flexible(
-                                  child: TextField(
-                                    maxLines: 1,
-                                    decoration: InputDecoration(
-                                        labelText: label2,
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15)))),
-                                  ),
+                                  width: 15,
+                                ),
+                                Expanded(
+                                  child: pair2 != null
+                                      ? FilledButton(
+                                          onPressed: () {
+                                            _showBottomSheet(
+                                              context,
+                                              pair2["field"]!,
+                                              pair2["question"] ??
+                                                  "", // Provide a default value
+                                              controllerPairs[pairIndex + 1]
+                                                  [0], // Field controller
+                                              controllerPairs[pairIndex + 1]
+                                                  [1], // Question controller
+                                            );
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Text(pair2["field"] ?? ""),
+                                          ),
+                                        )
+                                      : SizedBox.shrink(),
                                 ),
                               ],
                             ),
@@ -809,9 +1071,9 @@ class _SignUpState extends ConsumerState<SignUp> {
             ),
           ),
           Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(10),
               child: SizedBox(
-                height: screenHeight / 2.2,
+                height: screenHeight / 2.3,
                 child: ListView.builder(
                     itemCount: goodStuffList.length ~/
                         2, // Adjusted for pairs of labels
@@ -854,7 +1116,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                     }),
               )),
           Padding(
-            padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
+            padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -874,11 +1136,12 @@ class _SignUpState extends ConsumerState<SignUp> {
                     onPressed: () {
                       if (isChecked2 == true) {
                         incrementIndex();
+                        sendReq();
                       }
                     },
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(10, 7, 7, 10),
-                      child: Text('Next'),
+                      child: Text('Register to Blinderville'),
                     ))
               ],
             ),
