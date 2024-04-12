@@ -20,7 +20,6 @@ abstract class PostAPI {
       final Map<String, dynamic> postData = resp.data;
       return postData;
     } catch (e) {
-      print("Error posting: $e");
       // You might want to handle error differently for post
       rethrow;
     }

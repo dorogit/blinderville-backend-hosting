@@ -1,4 +1,4 @@
-import 'package:blinderville/utilities/api.dart';
+import 'package:blinderville/controller/users.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,6 +11,7 @@ class SignUp extends ConsumerStatefulWidget {
 }
 
 class _SignUpState extends ConsumerState<SignUp> {
+  late final userNotifier = ref.read(userProvider);
   int pageIndex = 0;
   String dropDownValue = 'Agender'; // Default value
   TextEditingController otherGenderController = TextEditingController();
@@ -103,88 +104,9 @@ class _SignUpState extends ConsumerState<SignUp> {
     });
   }
 
-  void sendReq() async {
-    // Hardcoded bioQuestions object
-    Map<String, dynamic> bioQuestions = {
-      "Birthday": {
-        "primaryAnswer": birthdayController.text,
-        "secondaryAnswer": birthdayQuestionController.text,
-      },
-      "Height": {
-        "primaryAnswer": heightController.text,
-        "secondaryAnswer": heightQuestionController.text,
-      },
-      "Weight": {
-        "primaryAnswer": weightController.text,
-        "secondaryAnswer": weightQuestionController.text,
-      },
-      "Race": {
-        "primaryAnswer": raceController.text,
-        "secondaryAnswer": raceQuestionController.text,
-      },
-      "Kids": {
-        "primaryAnswer": kidsController.text,
-        "secondaryAnswer": kidsQuestionController.text,
-      },
-      "Education": {
-        "primaryAnswer": educationController.text,
-        "secondaryAnswer": educationQuestionController.text,
-      },
-      "Smokes": {
-        "primaryAnswer": smokesController.text,
-        "secondaryAnswer": smokesQuestionController.text,
-      },
-      "Religion": {
-        "primaryAnswer": religionController.text,
-        "secondaryAnswer": religionQuestionController.text,
-      },
-      "Occupation": {
-        "primaryAnswer": occupationController.text,
-        "secondaryAnswer": occupationQuestionController.text,
-      },
-      "Political View": {
-        "primaryAnswer": politicalViewController.text,
-        "secondaryAnswer": politicalViewQuestionController.text,
-      },
-      "Social Media": {
-        "primaryAnswer": socialMediaController.text,
-        "secondaryAnswer": socialMediaQuestionController.text,
-      },
-      "Share Gender ID": {
-        "primaryAnswer": shareGenderIdController.text,
-        "secondaryAnswer": shareGenderIdQuestionController.text,
-      },
-    };
-    print({
-      'username': usernameController.text,
-      'email': emailController.text,
-      'zipCode': zipcodeController.text,
-      'password': passwordController.text,
-      'bioQuestions': {
-        "test": {"test": "etst", "test": "etst"}
-      },
-    });
-
-    // Send request with bioQuestions
-    final resp = await dio.post('/users/', data: {
-      'username': usernameController.text,
-      'email': emailController.text,
-      'zipCode': zipcodeController.text,
-      'password': passwordController.text,
-      'bioQuestions': bioQuestions,
-    });
-
-    print(resp);
-    print({
-      'username': usernameController.text,
-      'email': emailController.text,
-      'zipCode': zipcodeController.text,
-      'password': passwordController.text,
-      'bioQuestions': bioQuestions,
-    });
-  }
-
   void _showBottomSheet(
+    double screenHeight,
+    double screenWidth,
     BuildContext context,
     String field,
     String question,
@@ -192,55 +114,59 @@ class _SignUpState extends ConsumerState<SignUp> {
     TextEditingController questionController,
   ) {
     showModalBottomSheet<void>(
+      constraints: BoxConstraints(
+          maxWidth: screenWidth / 1.5, maxHeight: screenHeight / 2),
       context: context,
       builder: (BuildContext context) {
         return Padding(
           padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: 50,
-                child: TextField(
-                  controller: fieldController,
-                  style: TextStyle(fontSize: 12),
-                  maxLines: 14,
-                  decoration: InputDecoration(
-                    label: Text(field),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+          child: Flexible(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 50,
+                  child: TextField(
+                    controller: fieldController,
+                    style: TextStyle(fontSize: 12),
+                    maxLines: 14,
+                    decoration: InputDecoration(
+                      label: Text(field),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      filled: true,
                     ),
-                    filled: true,
                   ),
                 ),
-              ),
-              SizedBox(height: 16),
-              SizedBox(
-                height: 200,
-                child: TextField(
-                  controller: questionController,
-                  style: TextStyle(fontSize: 12),
-                  maxLines: 14,
-                  decoration: InputDecoration(
-                    label: Text(question),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                SizedBox(height: 16),
+                SizedBox(
+                  height: 200,
+                  child: TextField(
+                    controller: questionController,
+                    style: TextStyle(fontSize: 12),
+                    maxLines: 14,
+                    decoration: InputDecoration(
+                      label: Text(question),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      filled: true,
                     ),
-                    filled: true,
                   ),
                 ),
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  // Do something with the updated field and question
-                  print("Updated Field: ${fieldController.text}");
-                  print("Updated Question: ${questionController.text}");
-                  Navigator.pop(context);
-                },
-                child: Text("Save"),
-              ),
-            ],
+                SizedBox(height: 16),
+                FilledButton(
+                  onPressed: () {
+                    // Do something with the updated field and question
+                    print("Updated Field: ${fieldController.text}");
+                    print("Updated Question: ${questionController.text}");
+                    Navigator.pop(context);
+                  },
+                  child: Text("Save"),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -251,6 +177,14 @@ class _SignUpState extends ConsumerState<SignUp> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController zipcodeController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
+  final TextEditingController describeYourself = TextEditingController();
+  final TextEditingController knowToBeTrue = TextEditingController();
+  final TextEditingController wantOutOfLife = TextEditingController();
+  final TextEditingController turnOn = TextEditingController();
+  final TextEditingController petPeeve = TextEditingController();
+
   final TextEditingController birthdayController = TextEditingController();
   final TextEditingController birthdayQuestionController =
       TextEditingController();
@@ -311,6 +245,77 @@ class _SignUpState extends ConsumerState<SignUp> {
     [socialMediaController, socialMediaQuestionController],
     [shareGenderIdController, shareGenderIdQuestionController],
   ];
+
+  late List<TextEditingController> goodStuffControllers = [
+    describeYourself,
+    knowToBeTrue,
+    wantOutOfLife,
+    turnOn,
+    petPeeve
+  ];
+
+  void sendReq() async {
+    // Hardcoded bioQuestions object
+    Map<String, dynamic> bioQuestions = {
+      "Birthday": {
+        "primaryAnswer": birthdayController.text,
+        "secondaryAnswer": birthdayQuestionController.text,
+      },
+      "Height": {
+        "primaryAnswer": heightController.text,
+        "secondaryAnswer": heightQuestionController.text,
+      },
+      "Weight": {
+        "primaryAnswer": weightController.text,
+        "secondaryAnswer": weightQuestionController.text,
+      },
+      "Race": {
+        "primaryAnswer": raceController.text,
+        "secondaryAnswer": raceQuestionController.text,
+      },
+      "Kids": {
+        "primaryAnswer": kidsController.text,
+        "secondaryAnswer": kidsQuestionController.text,
+      },
+      "Education": {
+        "primaryAnswer": educationController.text,
+        "secondaryAnswer": educationQuestionController.text,
+      },
+      "Smokes": {
+        "primaryAnswer": smokesController.text,
+        "secondaryAnswer": smokesQuestionController.text,
+      },
+      "Religion": {
+        "primaryAnswer": religionController.text,
+        "secondaryAnswer": religionQuestionController.text,
+      },
+      "Occupation": {
+        "primaryAnswer": occupationController.text,
+        "secondaryAnswer": occupationQuestionController.text,
+      },
+      "Political View": {
+        "primaryAnswer": politicalViewController.text,
+        "secondaryAnswer": politicalViewQuestionController.text,
+      },
+      "Social Media": {
+        "primaryAnswer": socialMediaController.text,
+        "secondaryAnswer": socialMediaQuestionController.text,
+      },
+      "Share Gender ID": {
+        "primaryAnswer": shareGenderIdController.text,
+        "secondaryAnswer": shareGenderIdQuestionController.text,
+      },
+      "Describe yourself more fully": {"primaryAnswer": describeYourself.text},
+      "What do you know to be true?": {"primaryAnswer": knowToBeTrue.text},
+      "What do you want out of life?": {"primaryAnswer": wantOutOfLife.text},
+      "What turns you on?": {"primaryAnswer": turnOn.text},
+      "Pet peeves?": {"primaryAnswer": petPeeve.text},
+    };
+
+    // Send request with bioQuestions
+    userNotifier.postUserData(usernameController.text, emailController.text,
+        passwordController.text, zipcodeController.text, bioQuestions);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -384,9 +389,18 @@ class _SignUpState extends ConsumerState<SignUp> {
                 titleLine2: "JOINING US!",
                 subtitle: "ABOUT YOU"),
             userDataWidget(
+              screenHeight,
+              cardWidth,
+              zipcodeController,
+              "Your zipcode",
+              AssetImage('assets/images/1.png'),
+              Icon(Icons.location_city_rounded),
+              "This will be visible to others. Click NEXT if you want to skip now.",
+            ),
+            userDataWidget(
                 screenHeight,
                 cardWidth,
-                zipcodeController,
+                descriptionController,
                 "Your zipcode",
                 AssetImage('assets/images/3.png'),
                 Icon(Icons.location_city_rounded),
@@ -395,7 +409,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                 titleLine1: "THANKS FOR",
                 titleLine2: "JOINING US!",
                 subtitle: "ABOUT YOU"),
-            informationWidget(screenHeight),
+            informationWidget(screenHeight, screenWidth),
             imageWidget(screenHeight),
             goodStuff(screenHeight),
             finishWidget()
@@ -669,349 +683,152 @@ class _SignUpState extends ConsumerState<SignUp> {
     );
   }
 
-  Widget informationWidget(double screenHeight) {
+  Widget informationWidget(double screenHeight, double screenWidth) {
     return Padding(
         padding: EdgeInsets.all(10),
-        child: Column(children: [
-          Text('YOU CONTROL YOUR INFORMATION!',
-              textScaler: TextScaler.linear(2),
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
-                  color: Color.fromARGB(255, 244, 180, 68))),
-          SizedBox(height: 10),
-          Text(
-            'NOW THINGS ARE GETTING REALLY INTERESTING',
-            textScaler: TextScaler.linear(1.6),
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 120, 67, 255)),
-          ),
-          Row(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                  flex: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Fill in only the information you want to share.Anything you don't, just leave blank.",
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                          "If others want to see what you share, YOU will get paid for it.",
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                          "Content that you are willing to share must include an elaboration",
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                          "You will be able to update any of this information at any time, except Gender Identity where certain rules apply*",
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                          "Any information you choose to share must not be intentionally misleading. Violation of this rule may result in a permanent ban.",
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                          "Don't give this information away! Let others get to know you on the inside first.",
-                        ),
-                        SizedBox(height: 15),
-                        ListTile(
-                          leading: Checkbox(
-                            value: isChecked,
-                            onChanged: (bool? newValue) {
-                              setState(() {
-                                isChecked = !isChecked;
-                              });
-                            },
-                          ),
-                          title: Text(
-                            "I certify the info provided is true and accurate to the best of my knowledge. I understand that Blinderville reserves the right to suspend my account if I violate it's terms and conditions.",
-                            textScaler: TextScaler.linear(0.6),
-                          ),
-                        )
-                      ],
-                    ),
-                  )),
-              Expanded(
-                flex: 6,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: screenHeight / 2.2,
-                      child: ListView.builder(
-                        itemCount: (infoList.length / 2).ceil(),
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          int pairIndex = index * 2;
-                          Map<String, String>? pair1 = infoList[pairIndex];
-                          Map<String, String>? pair2 =
-                              infoList.length > pairIndex + 1
-                                  ? infoList[pairIndex + 1]
-                                  : null;
-
-                          return Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: FilledButton(
-                                    onPressed: () {
-                                      _showBottomSheet(
-                                        context,
-                                        pair1["field"]!,
-                                        pair1["question"] ??
-                                            "", // Provide a default value
-                                        controllerPairs[pairIndex]
-                                            [0], // Field controller
-                                        controllerPairs[pairIndex]
-                                            [1], // Question controller
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Text(pair1["field"] ?? ""),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Expanded(
-                                  child: pair2 != null
-                                      ? FilledButton(
-                                          onPressed: () {
-                                            _showBottomSheet(
-                                              context,
-                                              pair2["field"]!,
-                                              pair2["question"] ??
-                                                  "", // Provide a default value
-                                              controllerPairs[pairIndex + 1]
-                                                  [0], // Field controller
-                                              controllerPairs[pairIndex + 1]
-                                                  [1], // Question controller
-                                            );
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Text(pair2["field"] ?? ""),
-                                          ),
-                                        )
-                                      : SizedBox.shrink(),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          FilledButton(
-                              onPressed: () {
-                                decrementIndex();
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(10, 7, 7, 10),
-                                child: Text('Back'),
-                              )),
-                          isChecked == true
-                              ? Text("")
-                              : Text("Please tick the checkbox to continue"),
-                          FilledButton(
-                              onPressed: () {
-                                if (isChecked == true) {
-                                  incrementIndex();
-                                }
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(10, 7, 7, 10),
-                                child: Text('Next'),
-                              ))
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+              Text('YOU CONTROL YOUR INFORMATION!',
+                  textScaler: TextScaler.linear(2),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2,
+                      color: Color.fromARGB(255, 244, 180, 68))),
+              SizedBox(height: 10),
+              Text(
+                'NOW THINGS ARE GETTING REALLY INTERESTING',
+                textScaler: TextScaler.linear(1.6),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 120, 67, 255)),
               ),
-            ],
-          )
-        ]));
-  }
-
-  Widget imageWidget(double screenHeight) {
-    return Padding(
-        padding: EdgeInsets.all(10),
-        child: Column(children: [
-          Text('YOU CONTROL YOUR INFORMATION!',
-              textScaler: TextScaler.linear(2),
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
-                  color: Color.fromARGB(255, 244, 180, 68))),
-          Row(
-            children: [
-              Expanded(
-                  flex: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'PHOTOS',
-                          textAlign: TextAlign.center,
-                          textScaler: TextScaler.linear(1.6),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 120, 67, 255)),
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                          "You are so much more than just your good looks. You are beautiful in many ways, so let your personality, not your photo, take center stage.",
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                            "However, some people really want to see your great smile. If you want to show them, you can get paid*"),
-                        SizedBox(height: 15),
-                        Text(
-                          "You do not need to share photos EVER. But if you do, there are some rules:",
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                          "• You must be in the photo",
-                        ),
-                        SizedBox(height: 7),
-                        Text(
-                          "• Your whole face must be visible",
-                        ),
-                        SizedBox(height: 7),
-                        Text(
-                          "• No blurry, far away or group photos",
-                        ),
-                        SizedBox(height: 7),
-                        Text("• No illegal activity or nudes"),
-                        SizedBox(height: 15),
-                        Text("*See FAQ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 120, 67, 255))),
-                        ListTile(
-                          leading: Checkbox(
-                            value: isChecked2,
-                            onChanged: (bool? newValue) {
-                              setState(() {
-                                isChecked2 = !isChecked2;
-                              });
-                            },
-                          ),
-                          title: Text(
-                            "I certify the info provided is true and accurate to the best of my knowledge. I understand that Blinderville reserves the right to suspend my account if I violate it's terms and conditions.",
-                            textScaler: TextScaler.linear(0.6),
-                          ),
-                        )
-                      ],
-                    ),
-                  )),
-              Expanded(
-                  flex: 6,
-                  child: Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Column(
-                      children: [
-                        Text(
-                          "",
-                          textScaler: TextScaler.linear(1.6),
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Row(
+                children: [
+                  Expanded(
+                      flex: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
                           children: [
-                            Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                color: Colors.black38,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(60.0),
-                                  child: Icon(
-                                    Icons.image,
-                                    size: 40,
-                                  ),
-                                )),
-                            SizedBox(width: 10),
-                            Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                color: Colors.black38,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(60.0),
-                                  child: Icon(
-                                    Icons.image,
-                                    size: 40,
-                                  ),
-                                )),
-                            SizedBox(width: 10),
-                            Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                color: Colors.black38,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(60.0),
-                                  child: Icon(
-                                    Icons.image,
-                                    size: 40,
-                                  ),
-                                )),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: 300,
-                              child: Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Upload as many photos as you want or none at all. It's up to you!",
-                                    ),
-                                    SizedBox(height: 7),
-                                    Text(
-                                      "Photos with a description or caption garner more views.",
-                                    ),
-                                    SizedBox(height: 7),
-                                    Text(
-                                      "Photos will be vetted to ensure Blinderville rules are followed. This may take up to two days.",
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Text(
+                              "Fill in only the information you want to share.Anything you don't, just leave blank.",
                             ),
-                            Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                color: Colors.black38,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(60.0),
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 42,
-                                  ),
-                                )),
+                            SizedBox(height: 15),
+                            Text(
+                              "If others want to see what you share, YOU will get paid for it.",
+                            ),
+                            SizedBox(height: 15),
+                            Text(
+                              "Content that you are willing to share must include an elaboration",
+                            ),
+                            SizedBox(height: 15),
+                            Text(
+                              "You will be able to update any of this information at any time, except Gender Identity where certain rules apply*",
+                            ),
+                            SizedBox(height: 15),
+                            Text(
+                              "Any information you choose to share must not be intentionally misleading. Violation of this rule may result in a permanent ban.",
+                            ),
+                            SizedBox(height: 15),
+                            Text(
+                              "Don't give this information away! Let others get to know you on the inside first.",
+                            ),
+                            SizedBox(height: 15),
+                            ListTile(
+                              leading: Checkbox(
+                                value: isChecked,
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    isChecked = !isChecked;
+                                  });
+                                },
+                              ),
+                              title: Text(
+                                "I certify the info provided is true and accurate to the best of my knowledge. I understand that Blinderville reserves the right to suspend my account if I violate it's terms and conditions.",
+                                textScaler: TextScaler.linear(0.6),
+                              ),
+                            )
                           ],
+                        ),
+                      )),
+                  Expanded(
+                    flex: 6,
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                          itemCount: (infoList.length / 2).ceil(),
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            int pairIndex = index * 2;
+                            Map<String, String>? pair1 = infoList[pairIndex];
+                            Map<String, String>? pair2 =
+                                infoList.length > pairIndex + 1
+                                    ? infoList[pairIndex + 1]
+                                    : null;
+
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: FilledButton(
+                                      onPressed: () {
+                                        _showBottomSheet(
+                                          screenHeight,
+                                          screenWidth,
+                                          context,
+                                          pair1["field"]!,
+                                          pair1["question"] ??
+                                              "", // Provide a default value
+                                          controllerPairs[pairIndex]
+                                              [0], // Field controller
+                                          controllerPairs[pairIndex]
+                                              [1], // Question controller
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Text(pair1["field"] ?? ""),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Expanded(
+                                    child: pair2 != null
+                                        ? FilledButton(
+                                            onPressed: () {
+                                              _showBottomSheet(
+                                                screenHeight,
+                                                screenWidth,
+                                                context,
+                                                pair2["field"]!,
+                                                pair2["question"] ??
+                                                    "", // Provide a default value
+                                                controllerPairs[pairIndex + 1]
+                                                    [0], // Field controller
+                                                controllerPairs[pairIndex + 1]
+                                                    [1], // Question controller
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Text(pair2["field"] ?? ""),
+                                            ),
+                                          )
+                                        : SizedBox.shrink(),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                          padding: const EdgeInsets.all(15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -1025,13 +842,13 @@ class _SignUpState extends ConsumerState<SignUp> {
                                         const EdgeInsets.fromLTRB(10, 7, 7, 10),
                                     child: Text('Back'),
                                   )),
-                              isChecked2 == true
+                              isChecked == true
                                   ? Text("")
                                   : Text(
                                       "Please tick the checkbox to continue"),
                               FilledButton(
                                   onPressed: () {
-                                    if (isChecked2 == true) {
+                                    if (isChecked == true) {
                                       incrementIndex();
                                     }
                                   },
@@ -1045,10 +862,230 @@ class _SignUpState extends ConsumerState<SignUp> {
                         )
                       ],
                     ),
-                  )),
-            ],
-          )
-        ]));
+                  ),
+                ],
+              )
+            ]));
+  }
+
+  Widget imageWidget(double screenHeight) {
+    return Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('YOU CONTROL YOUR INFORMATION!',
+                  textScaler: TextScaler.linear(2),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2,
+                      color: Color.fromARGB(255, 244, 180, 68))),
+              Row(
+                children: [
+                  Expanded(
+                      flex: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'PHOTOS',
+                              textAlign: TextAlign.center,
+                              textScaler: TextScaler.linear(1.6),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 120, 67, 255)),
+                            ),
+                            SizedBox(height: 15),
+                            Text(
+                              "You are so much more than just your good looks. You are beautiful in many ways, so let your personality, not your photo, take center stage.",
+                            ),
+                            SizedBox(height: 15),
+                            Text(
+                                "However, some people really want to see your great smile. If you want to show them, you can get paid*"),
+                            SizedBox(height: 15),
+                            Text(
+                              "You do not need to share photos EVER. But if you do, there are some rules:",
+                            ),
+                            SizedBox(height: 15),
+                            Text(
+                              "• You must be in the photo",
+                            ),
+                            SizedBox(height: 7),
+                            Text(
+                              "• Your whole face must be visible",
+                            ),
+                            SizedBox(height: 7),
+                            Text(
+                              "• No blurry, far away or group photos",
+                            ),
+                            SizedBox(height: 7),
+                            Text("• No illegal activity or nudes"),
+                            SizedBox(height: 15),
+                            Text("*See FAQ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 120, 67, 255))),
+                            ListTile(
+                              leading: Checkbox(
+                                value: isChecked2,
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    isChecked2 = !isChecked2;
+                                  });
+                                },
+                              ),
+                              title: Text(
+                                "I certify the info provided is true and accurate to the best of my knowledge. I understand that Blinderville reserves the right to suspend my account if I violate it's terms and conditions.",
+                                textScaler: TextScaler.linear(0.6),
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                  Expanded(
+                      flex: 6,
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Column(
+                          children: [
+                            Text(
+                              "",
+                              textScaler: TextScaler.linear(1.6),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      color: Colors.black38,
+                                      child: SizedBox(
+                                        height: 150,
+                                        child: Icon(
+                                          Icons.image,
+                                          size: 40,
+                                        ),
+                                      )),
+                                ),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  flex: 3,
+                                  child: Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      color: Colors.black38,
+                                      child: SizedBox(
+                                        height: 150,
+                                        child: Icon(
+                                          Icons.image,
+                                          size: 40,
+                                        ),
+                                      )),
+                                ),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  flex: 3,
+                                  child: Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      color: Colors.black38,
+                                      child: SizedBox(
+                                        height: 150,
+                                        child: Icon(
+                                          Icons.image,
+                                          size: 40,
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 6,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Upload as many photos as you want or none at all. It's up to you!",
+                                      ),
+                                      SizedBox(height: 7),
+                                      Text(
+                                        "Photos with a description or caption garner more views.",
+                                      ),
+                                      SizedBox(height: 7),
+                                      Text(
+                                        "Photos will be vetted to ensure Blinderville rules are followed. This may take up to two days.",
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  flex: 3,
+                                  child: Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      color: Colors.black38,
+                                      child: SizedBox(
+                                        height: 150,
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 40,
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  FilledButton(
+                                      onPressed: () {
+                                        decrementIndex();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 7, 7, 10),
+                                        child: Text('Back'),
+                                      )),
+                                  isChecked2 == true
+                                      ? Text("")
+                                      : Text(
+                                          "Please tick the checkbox to continue"),
+                                  FilledButton(
+                                      onPressed: () {
+                                        if (isChecked2 == true) {
+                                          incrementIndex();
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 7, 7, 10),
+                                        child: Text('Next'),
+                                      ))
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                ],
+              )
+            ]));
   }
 
   Widget goodStuff(double screenHeight) {
@@ -1070,10 +1107,9 @@ class _SignUpState extends ConsumerState<SignUp> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Padding(
-              padding: EdgeInsets.all(10),
-              child: SizedBox(
-                height: screenHeight / 2.3,
+          Expanded(
+            child: Padding(
+                padding: EdgeInsets.all(10),
                 child: ListView.builder(
                     itemCount: goodStuffList.length ~/
                         2, // Adjusted for pairs of labels
@@ -1097,6 +1133,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                           SizedBox(
                             height: screenHeight / 6,
                             child: TextField(
+                              controller: goodStuffControllers[index],
                               style: TextStyle(fontSize: 12),
                               maxLines: 14,
                               decoration: InputDecoration(
@@ -1113,8 +1150,8 @@ class _SignUpState extends ConsumerState<SignUp> {
                           SizedBox(height: 40),
                         ],
                       );
-                    }),
-              )),
+                    })),
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
             child: Row(
